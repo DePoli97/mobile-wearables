@@ -42,5 +42,5 @@
 - Providing seamless user experience for searching and viewing objects.
 
 ## Contributors
-- **[Paolo Deidda](https://github.com/DePoli97)** - [your-email@example.com](mailto:paolo.deidda@usi.ch)
-- **[Nicola Mazzuchelli](https://github.com/Nickelpence)** - [partner-email@example.com](mailto:nicola.mazzuchelli@usi.ch)
+- **[Paolo Deidda](https://github.com/DePoli97)** - [paolo.deidda@usi.ch](mailto:paolo.deidda@usi.ch)
+- **[Nicola Mazzuchelli](https://github.com/Nickelpence)** - [nicola.mazzuchelli@usi.ch](mailto:nicola.mazzuchelli@usi.ch)
