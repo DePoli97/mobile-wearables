@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "715249083963",
+    "project_id": "inventorymapper-1234",
+    "storage_bucket": "inventorymapper-1234.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715249083963:android:a8584a4cc54cd69b8e1e1e",
+        "android_client_info": {
+          "package_name": "com.example.inventorymapper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeuZS3CwF8QPOkjDREnWgKd5b3NWwmkcU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
