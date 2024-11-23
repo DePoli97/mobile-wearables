@@ -1,14 +1,12 @@
 package com.example.inventorymapper;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.inventorymapper.ui.model.Item;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
-
-import com.google.firebase.database.DatabaseReference;
 
 
 import androidx.navigation.NavController;
@@ -24,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private DatabaseHelper mDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +51,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
-        // Initialize DatabaseHelper
-        mDatabaseHelper = new DatabaseHelper();
-
         // Example: Add a new item
-        mDatabaseHelper.addItem("Chair", "A comfortable chair");
-
-        // Example: get all items
-        DatabaseReference itemsRef = mDatabaseHelper.getAllItems();
-
+        Database.addItem("Chair", "A comfortable chair");
+        Item item = new Item("Table", "A sturdy table");
+        Database.addItem(item);
     }
 
     @Override
@@ -79,4 +70,5 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }

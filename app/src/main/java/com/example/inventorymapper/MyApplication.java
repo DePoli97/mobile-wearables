@@ -10,6 +10,7 @@ import com.google.firebase.FirebaseApp;
 // Qui vanno tutte le configurazioni per l'applicatione come Firebase, permessi, ecc...
 
 public class MyApplication extends Application {
+    private static FirebaseDatabase database;
 
     @Override
     public void onCreate() {
@@ -20,12 +21,12 @@ public class MyApplication extends Application {
         // Optionally, set Firebase Database persistence (for offline support)
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
-
-        // Write a message to the database
+        // Initialize the static database variable
         String url = "https://inventorymapper-1234-default-rtdb.europe-west1.firebasedatabase.app/";
-        FirebaseDatabase database = FirebaseDatabase.getInstance(url);
-        DatabaseReference myRef = database.getReference("message");
+        database = FirebaseDatabase.getInstance(url);
+    }
 
-        myRef.setValue("Hello, World!");
+    public static DatabaseReference getDatabaseReference() {
+        return database.getReference();
     }
 }
