@@ -12,7 +12,7 @@ public class Household {
     // - e.g, to sort households by nearest location network is fine
     // - to add a household, more precise localisation might be required, especially for more rural locations.
     // Docs: https://developer.android.com/reference/android/location/package-summary
-    // android.location.Location gpsLocation;
+    android.location.Location gpsLocation;
     private List<User> users;
 
     public Household(String id, String name, Location location, List<User> users) {

@@ -52,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         // Example: Add a new item
-        Database.addItem("Chair", "A comfortable chair");
-        Item item = new Item("Table", "A sturdy table");
-        Database.addItem(item);
+        //Database.addItem("Chair", "A comfortable chair");
+        //Item item = new Item("Table", "A sturdy table");
+        //Database.addItem(item);
     }
 
     @Override

@@ -1,20 +1,27 @@
 package com.example.inventorymapper.ui.home;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.inventorymapper.LocationHelper;
+import com.example.inventorymapper.MainActivity;
 import com.example.inventorymapper.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    LocationHelper locationHelper;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -26,6 +33,12 @@ public class HomeFragment extends Fragment {
 
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        if (LocationHelper.getLocationPermission(getActivity(), getContext())) {
+            this.locationHelper = new LocationHelper(getContext());
+        } else {
+            Toast.makeText(getContext(), "Unable to use locaiton services", Toast.LENGTH_SHORT).show();
+        }
         return root;
     }
 
@@ -34,4 +47,6 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
 }
