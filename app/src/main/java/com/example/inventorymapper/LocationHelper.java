@@ -52,10 +52,11 @@ public final class LocationHelper implements LocationListener{
     @Override
     public void onLocationChanged(@NonNull List<Location> locations) {
         LocationListener.super.onLocationChanged(locations);
+
+        // select last location
         for (Location loc:  locations) {
-            location = loc;
+            setLocation(loc);
         }
-        Log.d("Location", "Lat: " + location.getLatitude() + ", Lng: " + location.getLongitude());
     }
 
     @Override
@@ -70,7 +71,11 @@ public final class LocationHelper implements LocationListener{
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
+        this.location = location;
+    }
 
+    private void setLocation(Location location) {
+        Log.d("Location", "Update: Lat: " + this.location.getLatitude() + ", Lng: " + this.location.getLongitude());
     }
 
     /**
@@ -86,7 +91,7 @@ public final class LocationHelper implements LocationListener{
     }
 
     /**
-     *
+     * Asks user for permission to use location services.
      * @param act current application activity
      * @param ctx current application context
      * @return has access to the required location permissions
