@@ -22,6 +22,10 @@ public class MyApplication extends Application {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         // Initialize the static database variable
+
+//      TODO: url as env variable!
+//        String url = BuildConfig.FIREBASE_DATABASE_URL; // take env variable from sys local.properties
+
         String url = "https://inventorymapper-1234-default-rtdb.europe-west1.firebasedatabase.app/";
         database = FirebaseDatabase.getInstance(url);
     }
