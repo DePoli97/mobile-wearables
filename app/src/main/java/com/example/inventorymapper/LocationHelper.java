@@ -34,11 +34,15 @@ public final class LocationHelper implements LocationListener{
         }
     }
 
-    public Optional<Location> getLocation() {
+    public Optional<Location> getCurrentLocation() {
         if(this.locationManager == null) {
             return Optional.empty();
         }
 
+        /*
+        * Not sure which is the alternative
+        * TODO: find alternative for previous versions
+        */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             this.locationManager.requestFlush(LocationManager.GPS_PROVIDER, this, 1001);
         }

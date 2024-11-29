@@ -34,10 +34,11 @@ public class HomeFragment extends Fragment {
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
+        // location
         if (LocationHelper.getLocationPermission(getActivity(), getContext())) {
             this.locationHelper = new LocationHelper(getContext());
         } else {
-            Toast.makeText(getContext(), "Unable to use locaiton services", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Unable to use location service", Toast.LENGTH_SHORT).show();
         }
         return root;
     }
