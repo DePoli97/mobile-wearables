@@ -41,7 +41,7 @@ public final class LocationHelper implements LocationListener{
 
         /*
         * Not sure which is the alternative
-        * TODO: find alternative for previous versions
+        * TODO: find alternative for previous versions?
         */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             this.locationManager.requestFlush(LocationManager.GPS_PROVIDER, this, 1001);
@@ -62,19 +62,22 @@ public final class LocationHelper implements LocationListener{
     @Override
     public void onProviderEnabled(@NonNull String provider) {
         LocationListener.super.onProviderEnabled(provider);
+        // TODO: handle various providers
     }
 
     @Override
     public void onProviderDisabled(@NonNull String provider) {
         LocationListener.super.onProviderDisabled(provider);
+        // TODO: handle various providers
     }
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        this.location = location;
+        setLocation(location);
     }
 
     private void setLocation(Location location) {
+        this.location = location;
         Log.d("Location", "Update: Lat: " + this.location.getLatitude() + ", Lng: " + this.location.getLongitude());
     }
 
