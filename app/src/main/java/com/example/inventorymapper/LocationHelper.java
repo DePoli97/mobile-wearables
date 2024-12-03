@@ -46,6 +46,9 @@ public final class LocationHelper implements LocationListener{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             this.locationManager.requestFlush(LocationManager.GPS_PROVIDER, this, 1001);
         }
+        if(location == null) {
+            return Optional.empty();
+        }
         return Optional.of(location);
     }
 
