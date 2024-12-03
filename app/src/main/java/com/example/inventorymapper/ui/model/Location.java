@@ -11,6 +11,9 @@ public class Location {
     private List<Location> sublocations;
     private List<Item> items;
 
+    public Location() {
+    }
+
     public Location(String name, String description) {
         this.name = name;
         this.description = description;
