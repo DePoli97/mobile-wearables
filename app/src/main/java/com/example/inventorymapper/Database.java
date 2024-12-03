@@ -27,4 +27,8 @@ public final class Database {
     public static DatabaseReference getAllItems() {
         return mDatabase.child("items");
     }
+
+    public static DatabaseReference getAllHouseholds() {
+        return mDatabase.child("households");
+    }
 }

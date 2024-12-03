@@ -1,53 +1,41 @@
 package com.example.inventorymapper.ui.home;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.inventorymapper.LocationHelper;
-import com.example.inventorymapper.MainActivity;
-import com.example.inventorymapper.databinding.FragmentHomeBinding;
+import com.example.inventorymapper.R;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
-    LocationHelper locationHelper;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-        // location
-        if (LocationHelper.getLocationPermission(getActivity(), getContext())) {
-            this.locationHelper = new LocationHelper(getContext());
-        } else {
-            Toast.makeText(getContext(), "Unable to use location service", Toast.LENGTH_SHORT).show();
-        }
-        return root;
-    }
+    private RecyclerView recyclerView;
+    private HouseholdAdapter adapter;
+    private HomeViewModel homeViewModel;
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        recyclerView = root.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new HouseholdAdapter(new ArrayList<>());
+        recyclerView.setAdapter(adapter);
+
+        // Initialize and observe the ViewModel
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel.getHouseholds().observe(getViewLifecycleOwner(), households -> {
+            adapter.setHouseholds(households);
+        });
+
+        return root;
     }
-
-
 }
