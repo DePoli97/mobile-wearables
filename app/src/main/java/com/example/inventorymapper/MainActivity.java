@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.inventorymapper.ui.home.HouseholdCreationForm;
 import com.example.inventorymapper.ui.home.ItemCreationForm;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -34,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ItemCreationForm form = new ItemCreationForm();
-                form.show(getSupportFragmentManager(), "Home-form");
+                //ItemCreationForm form = new ItemCreationForm();
+                //form.show(getSupportFragmentManager(), "Home-form");
+                HouseholdCreationForm form = new HouseholdCreationForm();
+                form.show(getSupportFragmentManager(), "Household-form");
             }
         });
         DrawerLayout drawer = binding.drawerLayout;

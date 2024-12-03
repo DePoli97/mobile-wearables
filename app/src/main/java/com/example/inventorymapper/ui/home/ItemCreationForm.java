@@ -25,7 +25,7 @@ public class ItemCreationForm extends DialogFragment {
 
         View root = inflater.inflate(R.layout.fragment_item_creation_form, container, false);
 
-        this.textName = root.findViewById(R.id.name_input);
+        this.textName = root.findViewById(R.id.house_name);
         this.textDescription = root.findViewById(R.id.desc_input);
         this.addButton = root.findViewById(R.id.confirm_btn);
         this.addButton.setOnClickListener(view -> {
@@ -37,6 +37,6 @@ public class ItemCreationForm extends DialogFragment {
     }
 
     private void add_item() {
-        Database.addItem(this.textName.getText().toString(), this.textDescription.getText().toString());
+        Database.addItem(this.textName.getText().toString(), this.textDescription.getText().toString(), "hello");
     }
 }
