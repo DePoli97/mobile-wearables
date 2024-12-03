@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -112,6 +113,10 @@ public class ItemCreationForm extends DialogFragment {
         String locationName = this.textName.getText().toString();
         String locationDesc = this.textDescription.getText().toString();
         Household household = (Household) this.householdSpinner.getSelectedItem();
+        if(household == null) {
+            Toast.makeText(getContext(), "No household selected", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Database.addItem(locationName, locationDesc, household.getId());
     }
