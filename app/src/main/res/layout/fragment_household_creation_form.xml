@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/house_name"
+            android:id="@+id/item_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Household name"

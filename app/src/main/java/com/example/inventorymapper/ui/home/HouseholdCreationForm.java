@@ -34,7 +34,7 @@ public class HouseholdCreationForm extends DialogFragment {
 
         View root = inflater.inflate(R.layout.fragment_household_creation_form, container, false);
 
-        this.textName = root.findViewById(R.id.house_name);
+        this.textName = root.findViewById(R.id.item_name);
         this.locationName = root.findViewById(R.id.location_name);
         this.locationDesc = root.findViewById(R.id.location_desc);
         this.addButton = root.findViewById(R.id.confirm_btn);

@@ -79,4 +79,20 @@ public class Location {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public List<Location> getSublocations() {
+        return sublocations;
+    }
+
+    public void setSublocations(List<Location> sublocations) {
+        this.sublocations = sublocations;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
 }

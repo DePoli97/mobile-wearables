@@ -12,7 +12,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.inventorymapper.Database;
@@ -20,8 +19,6 @@ import com.example.inventorymapper.LocationHelper;
 import com.example.inventorymapper.R;
 import com.example.inventorymapper.ui.model.Household;
 import com.example.inventorymapper.ui.model.Location;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -52,24 +49,7 @@ public class LocationCreationForm extends DialogFragment {
         List<Household> subjects = new ArrayList<>();
 
         // ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, subjects);
-        ArrayAdapter<Household> adapter = new ArrayAdapter<Household>(getContext(), android.R.layout.simple_spinner_dropdown_item, subjects) {
-            @NonNull
-            @Override
-            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                TextView view = (TextView) super.getView(position, convertView, parent);
-                Household item = getItem(position);
-                view.setText(item.getName());
-                return view;
-            }
-
-            @Override
-            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                TextView view = (TextView) super.getDropDownView(position, convertView, parent);
-                Household item = getItem(position);
-                view.setText(item.getName());
-                return view;
-            }
-        };
+        ArrayAdapter<Household> adapter = new HouseHoldAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, subjects);
 
         this.listener = new ValueEventListener() {
 
@@ -79,6 +59,9 @@ public class LocationCreationForm extends DialogFragment {
                         .forEach((snapshot) -> {
                             Household household = snapshot.getValue(Household.class);
                             household.setId(snapshot.getKey());
+                            if(snapshot.getKey() == null) {
+                                Log.d("DB", "key is null!");
+                            }
                             subjects.add(household);
                         });
                 adapter.notifyDataSetChanged();
@@ -95,7 +78,7 @@ public class LocationCreationForm extends DialogFragment {
         this.householdSpinner.setAdapter(adapter);
 
         this.addButton.setOnClickListener(view -> {
-            this.add_household();
+            this.add_location();
             this.dismissNow();
         });
         this.locationHelper = new LocationHelper(getContext());
@@ -109,7 +92,7 @@ public class LocationCreationForm extends DialogFragment {
         Database.getHouseholds().removeEventListener(this.listener);
     }
 
-    private void add_household() {
+    private void add_location() {
         String locationDesc = this.locationDesc.getText().toString();
         String locationName = this.locationName.getText().toString();
         Household household = (Household) this.householdSpinner.getSelectedItem();

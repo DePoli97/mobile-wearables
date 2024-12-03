@@ -4,11 +4,16 @@ import com.example.inventorymapper.ui.model.Household;
 import com.example.inventorymapper.ui.model.Item;
 import com.example.inventorymapper.ui.model.Location;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class Database {
 
     // Static DatabaseReference, shared across all usages
     private static final DatabaseReference mDatabase = MyApplication.getDatabaseReference();
+
 
     // Private constructor to prevent instantiation
     private Database() {
@@ -38,15 +43,27 @@ public final class Database {
         return mDatabase.child("households");
     }
 
-    public static void addItem(Item item) {
-        DatabaseReference itemRef = mDatabase.child("items").push();
-        itemRef.setValue(item);
+    public static DatabaseReference getLocationOfHousehold(String householdId) {
+        return mDatabase.child("households")
+                .child(householdId)
+                .child("location");
     }
 
-    public static void addItem(String itemName, String itemDescription, String locationId) {
+    public static void addItem(String itemName, String itemDescription, String householdId) {
         Item item = new Item(itemName, itemDescription);
-        DatabaseReference itemRef = mDatabase.child("locations").child(locationId).push();
-        itemRef.setValue(item);
+        DatabaseReference itemRef = mDatabase
+                .child("households")
+                .child(householdId)
+                .child("location")
+                .child("items");
+        itemRef.get().addOnCompleteListener(snapshot -> {
+            List<Item> list = (List<Item>) snapshot.getResult().getValue();
+            if(list == null) {
+                list = new ArrayList<Item>();
+            }
+            list.add(item);
+            itemRef.setValue(list);
+        });
     }
 
     public static DatabaseReference getAllItems() {

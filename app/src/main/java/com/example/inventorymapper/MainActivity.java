@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    static boolean tmp = true;
+    static boolean tmp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 if(tmp) {
                     HouseholdCreationForm form = new HouseholdCreationForm();
                     form.show(getSupportFragmentManager(), "Household-form");
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
                     LocationCreationForm form = new LocationCreationForm();
                     form.show(getSupportFragmentManager(), "Location-form");
                 }
+                */
+                ItemCreationForm form = new ItemCreationForm();
+                form.show(getSupportFragmentManager(), "Item-form");
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
