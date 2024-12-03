@@ -7,19 +7,20 @@ public class Household {
     private String name;
     private Location location;
     private List<User> users;
-    // TODO: understand how to use locations in android
-    // likely need a location helper, which decides which localization service/provider
-    //    (GPS, Network,...) to use based on user preference/availability/requirements
-    // - e.g, to sort households by nearest location network is fine
-    // - to add a household, more precise localisation might be required, especially for more rural locations.
-    // Docs: https://developer.android.com/reference/android/location/package-summary
-    android.location.Location gpsLocation;
+    private double latitude;
+    private double longitude;
+
+    public Household() {
+
+    }
 
     public Household(String id, String name, Location location, List<User> users, android.location.Location gpsLocation) {
         this.id = id;
         this.name = name;
         this.location = location;
-        this.gpsLocation = gpsLocation;
+        this.latitude = gpsLocation.getLatitude();
+        this.longitude = gpsLocation.getLongitude();
+
         this.users = users;
     }
 
@@ -33,6 +34,14 @@ public class Household {
 
     public String getName() {
         return name;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 
     public Location getLocation() {
@@ -55,12 +64,5 @@ public class Household {
         this.users = users;
     }
 
-    public android.location.Location getGpsLocation() {
-        return gpsLocation;
-    }
-
-    public void setGpsLocation(android.location.Location gpsLocation) {
-        this.gpsLocation = gpsLocation;
-    }
 }
 
