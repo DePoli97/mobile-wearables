@@ -49,7 +49,7 @@ public class LocationCreationForm extends DialogFragment {
         List<Household> subjects = new ArrayList<>();
 
         // ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, subjects);
-        ArrayAdapter<Household> adapter = new HouseHoldAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, subjects);
+        ArrayAdapter<Household> adapter = new SpinnerHouseholdAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, subjects);
 
         this.listener = new ValueEventListener() {
 

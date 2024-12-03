@@ -13,9 +13,9 @@ import com.example.inventorymapper.ui.model.Household;
 
 import java.util.List;
 
-public class HouseHoldAdapter extends ArrayAdapter<Household> {
+public class SpinnerHouseholdAdapter extends ArrayAdapter<Household> {
 
-    public HouseHoldAdapter(@NonNull Context context, int ignored_resource, @NonNull List<Household> objects) {
+    public SpinnerHouseholdAdapter(@NonNull Context context, int ignored_resource, @NonNull List<Household> objects) {
         super(context, android.R.layout.simple_spinner_dropdown_item, objects);
     }
 

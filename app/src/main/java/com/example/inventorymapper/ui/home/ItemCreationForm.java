@@ -17,7 +17,6 @@ import androidx.fragment.app.DialogFragment;
 import com.example.inventorymapper.Database;
 import com.example.inventorymapper.R;
 import com.example.inventorymapper.ui.model.Household;
-import com.example.inventorymapper.ui.model.Location;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -46,7 +45,7 @@ public class ItemCreationForm extends DialogFragment {
 
         this.householdSpinner = root.findViewById(R.id.house_spinner);
         ArrayList<Household> house_subjects = new ArrayList<>();
-        ArrayAdapter<Household> houseAdapter = new HouseHoldAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, house_subjects);
+        ArrayAdapter<Household> houseAdapter = new SpinnerHouseholdAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, house_subjects);
         this.householdListener = new ValueEventListener() {
 
             @Override
