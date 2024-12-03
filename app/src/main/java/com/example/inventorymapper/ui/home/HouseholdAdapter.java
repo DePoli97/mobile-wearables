@@ -13,12 +13,14 @@ import com.example.inventorymapper.ui.model.Household;
 
 import java.util.List;
 
-public class HouseholdAdapter extends RecyclerView.Adapter<HouseholdAdapter.ViewHolder> {
+public class HouseholdAdapter extends RecyclerView.Adapter<HouseholdAdapter.HouseholdViewHolder> {
 
     private List<Household> households;
+    private OnHouseholdClickListener clickListener;
 
-    public HouseholdAdapter(List<Household> households) {
+    public HouseholdAdapter(List<Household> households, OnHouseholdClickListener clickListener) {
         this.households = households;
+        this.clickListener = clickListener;
     }
 
     public void setHouseholds(List<Household> households) {
@@ -28,16 +30,19 @@ public class HouseholdAdapter extends RecyclerView.Adapter<HouseholdAdapter.View
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HouseholdViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_household, parent, false);
-        return new ViewHolder(view);
+        return new HouseholdViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HouseholdViewHolder holder, int position) {
         Household household = households.get(position);
         holder.nameTextView.setText(household.getName());
+
+        // Handle click event
+        holder.itemView.setOnClickListener(v -> clickListener.onHouseholdClick(household));
     }
 
     @Override
@@ -45,12 +50,16 @@ public class HouseholdAdapter extends RecyclerView.Adapter<HouseholdAdapter.View
         return households != null ? households.size() : 0;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class HouseholdViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
 
-        ViewHolder(View itemView) {
+        HouseholdViewHolder(View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.household_name);
         }
+    }
+
+    public interface OnHouseholdClickListener {
+        void onHouseholdClick(Household household);
     }
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,39 +15,108 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.inventorymapper.R;
+import com.example.inventorymapper.Database;
+import com.example.inventorymapper.ui.model.Household;
+import com.example.inventorymapper.ui.model.Item;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private HouseholdAdapter adapter;
+    private RecyclerView householdsRecyclerView, itemsRecyclerView;
+    private HouseholdAdapter householdAdapter;
+    private LocationAdapter locationAdapter;
+    private Button backButton;
+    private TextView addNewText;
+
     private HomeViewModel homeViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // Initialize RecyclerView
-        recyclerView = root.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new HouseholdAdapter(new ArrayList<>());
-        recyclerView.setAdapter(adapter);
+        // Initialize Views
+        householdsRecyclerView = root.findViewById(R.id.recycler_view);
+        itemsRecyclerView = root.findViewById(R.id.items_recycler_view);
+        backButton = root.findViewById(R.id.back_to_households_button);
+        addNewText = root.findViewById(R.id.add_new_text);
 
-        // Add click listener to "Add new location" TextView
-        TextView addNewText = root.findViewById(R.id.add_new_text);
+        // Set up RecyclerViews
+        householdsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        itemsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Initialize ViewModel
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
+        // Set up Household Adapter with click listener
+        householdAdapter = new HouseholdAdapter(new ArrayList<>(), household -> {
+            // Show items for the clicked Household
+            displayItemsForHousehold(household);
+        });
+        householdsRecyclerView.setAdapter(householdAdapter);
+
+        // Set up Location Adapter for items
+        locationAdapter = new LocationAdapter(new ArrayList<>());
+        itemsRecyclerView.setAdapter(locationAdapter);
+
+        // Observe Household Data
+        homeViewModel.getHouseholds().observe(getViewLifecycleOwner(), households -> {
+            householdAdapter.setHouseholds(households);
+        });
+
+        // Handle "Add New Location" click
         addNewText.setOnClickListener(v -> {
-            // Show the form to create a new household
+            // Open form to add new household
             HouseholdCreationForm form = new HouseholdCreationForm();
             form.show(getParentFragmentManager(), "Household-form");
         });
 
-        // Observe data from ViewModel and update RecyclerView
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        homeViewModel.getHouseholds().observe(getViewLifecycleOwner(), households -> {
-            adapter.setHouseholds(households);
-        });
+        // Handle "Back to Households" click
+        backButton.setOnClickListener(v -> showHouseholdsList());
 
         return root;
+    }
+
+    private void displayItemsForHousehold(Household household) {
+        // Fetch items for the selected Household
+        Database.getAllHouseholds().child(household.getId()).child("location").child("items")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<Item> items = new ArrayList<>();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Item item = snapshot.getValue(Item.class);
+                            if (item != null) {
+                                items.add(item);
+                            }
+                        }
+                        locationAdapter.setItems(items);
+
+                        // Show items RecyclerView and back button, hide households
+                        householdsRecyclerView.setVisibility(View.GONE);
+                        addNewText.setVisibility(View.GONE);
+                        itemsRecyclerView.setVisibility(View.VISIBLE);
+                        backButton.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e("HomeFragment", "Database error: " + databaseError.getMessage());
+                    }
+                });
+    }
+
+    private void showHouseholdsList() {
+        // Show the Households list and "Add New Location" button
+        householdsRecyclerView.setVisibility(View.VISIBLE);
+        addNewText.setVisibility(View.VISIBLE);
+
+        // Hide items RecyclerView and back button
+        itemsRecyclerView.setVisibility(View.GONE);
+        backButton.setVisibility(View.GONE);
     }
 }
