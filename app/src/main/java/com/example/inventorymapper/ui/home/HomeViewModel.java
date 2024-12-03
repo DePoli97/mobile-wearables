@@ -1,5 +1,7 @@
 package com.example.inventorymapper.ui.home;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -25,9 +27,10 @@ public class HomeViewModel extends ViewModel {
     }
 
     private void loadHouseholds() {
-        Database.getAllHouseholds().addListenerForSingleValueEvent(new ValueEventListener() {
+        Database.getAllHouseholds().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("asdf", HomeViewModel.class.getName() + " - Data Changed");
                 List<Household> households = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Household household = snapshot.getValue(Household.class);
@@ -35,12 +38,12 @@ public class HomeViewModel extends ViewModel {
                         households.add(household);
                     }
                 }
-                householdsLiveData.setValue(households);
+                householdsLiveData.setValue(households); // Notify observers
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Handle error
+                Log.e("HomeViewModel", "Database Error: " + databaseError.getMessage());
             }
         });
     }
