@@ -34,6 +34,10 @@ public final class Database {
         return location;
     }
 
+    public static DatabaseReference getHouseholds() {
+        return mDatabase.child("households");
+    }
+
     public static void addItem(Item item) {
         DatabaseReference itemRef = mDatabase.child("items").push();
         itemRef.setValue(item);

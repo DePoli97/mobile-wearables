@@ -12,6 +12,7 @@ public class Location {
     private List<Item> items;
 
     public Location() {
+
     }
 
     public Location(String name, String description) {
