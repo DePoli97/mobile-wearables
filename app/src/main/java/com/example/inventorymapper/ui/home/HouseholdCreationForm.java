@@ -27,7 +27,6 @@ public class HouseholdCreationForm extends DialogFragment {
     private TextView locationName;
     private TextView locationDesc;
     private Button addButton;
-    private LocationHelper locationHelper;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,7 +43,6 @@ public class HouseholdCreationForm extends DialogFragment {
             this.add_household();
             this.dismissNow();
         });
-        this.locationHelper = new LocationHelper(getContext());
 
         return root;
     }
@@ -55,25 +53,20 @@ public class HouseholdCreationForm extends DialogFragment {
         String locationName = this.locationName.getText().toString();
         android.location.Location location;
 
-        Optional<android.location.Location> optLoc = locationHelper.getCurrentLocation();
+        Optional<android.location.Location> optLoc = LocationHelper.getCurrentLocation();
         if (optLoc.isPresent()) {
             location = optLoc.get();
+            Household household = new Household(null, name, new Location(locationName, locationDesc), List.of(), location);
+            Database.addHousehold(household);
         } else {
-//            Toast.makeText(getContext(), "Unable to get location, aborting", Toast.LENGTH_LONG).show();
-            // Create a dummy location
-            location = new android.location.Location("");
-            location.setLatitude(0.0);
-            location.setLongitude(0.0);
+            Toast.makeText(getContext(), "Unable to get location, aborting", Toast.LENGTH_LONG).show();
         }
 
-        // Generate a unique ID from Firebase
-        DatabaseReference ref = Database.getAllHouseholds().push();
-        String id = ref.getKey(); // Get the generated key
-
         // Create the Household object with the generated ID
-        Household household = new Household(id, name, new Location(locationName, locationDesc), List.of(), location);
+
 
         // Save the object in the database
+        /*
         ref.setValue(household).addOnCompleteListener(task -> {
             // Check if the fragment is still attached before calling requireContext()
             if (isAdded()) {
@@ -87,6 +80,7 @@ public class HouseholdCreationForm extends DialogFragment {
                 Log.w("HouseholdCreationForm", "Fragment is not attached to context. Skipping Toast.");
             }
         });
+         */
     }
 
 }

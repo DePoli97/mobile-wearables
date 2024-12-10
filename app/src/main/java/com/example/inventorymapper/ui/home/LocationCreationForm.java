@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.inventorymapper.Database;
-import com.example.inventorymapper.LocationHelper;
 import com.example.inventorymapper.R;
 import com.example.inventorymapper.ui.model.Household;
 import com.example.inventorymapper.ui.model.Location;
@@ -31,7 +30,6 @@ public class LocationCreationForm extends DialogFragment {
     private TextView locationDesc;
     private Button addButton;
     private Spinner householdSpinner;
-    private LocationHelper locationHelper;
     private ValueEventListener listener;
 
     @Override
@@ -81,7 +79,6 @@ public class LocationCreationForm extends DialogFragment {
             this.add_location();
             this.dismissNow();
         });
-        this.locationHelper = new LocationHelper(getContext());
 
         return root;
     }

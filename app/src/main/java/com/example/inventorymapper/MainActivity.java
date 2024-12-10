@@ -1,6 +1,8 @@
 package com.example.inventorymapper;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
@@ -9,6 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -17,6 +20,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.inventorymapper.databinding.ActivityMainBinding;
+
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,15 +40,6 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                if(tmp) {
-                    HouseholdCreationForm form = new HouseholdCreationForm();
-                    form.show(getSupportFragmentManager(), "Household-form");
-                } else {
-                    LocationCreationForm form = new LocationCreationForm();
-                    form.show(getSupportFragmentManager(), "Location-form");
-                }
-                */
                 ItemCreationForm form = new ItemCreationForm();
                 form.show(getSupportFragmentManager(), "Item-form");
             }
@@ -60,10 +56,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        // Example: Add a new item
-        //Database.addItem("Chair", "A comfortable chair");
-        //Item item = new Item("Table", "A sturdy table");
-        //Database.addItem(item);
+        LocationHelper.getLocationPermission(this, MainActivity.this);
     }
 
     public FloatingActionButton getActionButton() {
@@ -83,5 +76,24 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case LocationHelper.REQUEST_LOCATION_PERMISSION:
+                if (Arrays.stream(grantResults).anyMatch(perm -> perm == PackageManager.PERMISSION_GRANTED)) {
+                    LocationHelper.getLocationPermission(this, MainActivity.this);
+                    Log.d("Permission", "Handling permission result for location");
+                } else {
+                    Log.e("Permission", "Unable to get location permissions");
+                }
+                break;
+            default:
+                Log.w("Permission", "Unknown permission request");
+        }
+    }
+
 
 }

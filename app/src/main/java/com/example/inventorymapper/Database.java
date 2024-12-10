@@ -22,8 +22,8 @@ public final class Database {
 
     public static Household addHousehold(Household household) {
         DatabaseReference householdRef = mDatabase.child("households").push();
-        householdRef.setValue(household);
         household.setId(householdRef.getKey());
+        householdRef.setValue(household);
         return household;
     }
 
@@ -33,8 +33,8 @@ public final class Database {
                 .child("location")
                 .child("sublocations")
                 .push();
-        locationRef.setValue(location);
         location.setId(locationRef.getKey());
+        locationRef.setValue(location);
 
         return location;
     }
