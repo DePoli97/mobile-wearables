@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
-import com.example.inventorymapper.ui.home.ItemCreationForm;
+import com.example.inventorymapper.ui.forms.ItemCreationForm;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -24,6 +24,7 @@ import com.example.inventorymapper.databinding.ActivityMainBinding;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
+    private final int MAP_PERMISSION_REQUEST = 6969;
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;

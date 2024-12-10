@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="15dp"
     android:paddingVertical="15dp"
-    tools:context=".ui.home.LocationCreationForm">
+    tools:context=".ui.forms.LocationCreationForm">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"

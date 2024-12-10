@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="15dp"
     android:paddingVertical="15dp"
-    tools:context=".ui.home.ItemCreationForm">
+    tools:context=".ui.forms.ItemCreationForm">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/item_name"
+            android:id="@+id/house_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="name"

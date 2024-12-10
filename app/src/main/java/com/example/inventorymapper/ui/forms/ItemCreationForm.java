@@ -1,4 +1,4 @@
-package com.example.inventorymapper.ui.home;
+package com.example.inventorymapper.ui.forms;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +39,7 @@ public class ItemCreationForm extends DialogFragment {
 
         View root = inflater.inflate(R.layout.fragment_item_creation_form, container, false);
 
-        this.textName = root.findViewById(R.id.item_name);
+        this.textName = root.findViewById(R.id.house_name);
         this.textDescription = root.findViewById(R.id.item_desc);
         this.addButton = root.findViewById(R.id.confirm_btn);
 

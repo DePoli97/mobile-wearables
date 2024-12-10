@@ -3,33 +3,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingHorizontal="15dp"
-    android:paddingVertical="15dp"
-    tools:context=".ui.home.HouseholdCreationForm">
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="5dp"
+    android:paddingVertical="5dp"
+    tools:context=".ui.forms.HouseholdCreationForm">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mapContainer"
+        android:name="com.example.inventorymapper.ui.forms.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/confirm_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+        tools:layout="@layout/fragment_map" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
-        android:layout_width="370dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/item_name"
+            android:id="@+id/house_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Household name"
+            android:inputType="text|textShortMessage"
             android:nestedScrollingEnabled="false"
             android:singleLine="true"
-            android:textAlignment="center" />
+            android:textAlignment="textStart" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/confirm_btn"
         android:layout_width="203dp"
         android:layout_height="65dp"
+        android:layout_marginBottom="10dp"
         android:text="Add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,37 +56,22 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        android:layout_width="370dp"
+        android:id="@+id/textInputLayout2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/location_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Location name"
-            android:nestedScrollingEnabled="false"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
-        android:layout_width="370dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
-
-        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/location_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Location desc"
+            android:hint="Location description"
+            android:inputType="text|textShortMessage|textNoSuggestions"
             android:nestedScrollingEnabled="false" />
     </com.google.android.material.textfield.TextInputLayout>
 

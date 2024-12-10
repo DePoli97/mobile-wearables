@@ -52,6 +52,7 @@ dependencies {
 
     // Import the Firebase BoM
     implementation(platform(libs.firebase.bom))
+    implementation(libs.osmdroid.android)
 
 
     // TODO: Add the dependencies for Firebase products you want to use

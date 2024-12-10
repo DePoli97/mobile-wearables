@@ -50,7 +50,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
         LocationViewHolder(View itemView) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.item_name);
+            nameTextView = itemView.findViewById(R.id.house_name);
         }
     }
 }

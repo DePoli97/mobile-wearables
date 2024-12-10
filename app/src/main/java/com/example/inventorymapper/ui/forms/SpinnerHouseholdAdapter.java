@@ -1,4 +1,4 @@
-package com.example.inventorymapper.ui.home;
+package com.example.inventorymapper.ui.forms;
 
 import android.content.Context;
 import android.view.View;
