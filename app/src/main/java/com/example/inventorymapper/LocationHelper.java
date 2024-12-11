@@ -36,16 +36,26 @@ public final class LocationHelper  {
             return Optional.empty();
         }
 
-        location = locationManager.getLastKnownLocation(provider);
+        setLocation(locationManager.getLastKnownLocation(provider));
 
         if(location == null) {
+
             return Optional.empty();
         }
 
         return Optional.of(location);
     }
 
+    public static Location getDummyLocation() {
+        Location dummyLocation = new Location(provider);
+        dummyLocation.setLatitude(51);
+        return dummyLocation;
+    }
+
     private static void setLocation(Location newLocation) {
+        if (location == null) {
+            return;
+        }
         location = newLocation;
         Log.d("Location", "Update: Lat: " + location.getLatitude() + ", Lng: " + location.getLongitude());
     }
@@ -81,6 +91,12 @@ public final class LocationHelper  {
 
         locationListener = new LocationListener() {
             @Override
+            public void onFlushComplete(int requestCode) {
+                LocationListener.super.onFlushComplete(requestCode);
+                Log.d("Location", "Flush complete");
+            }
+
+            @Override
             public void onLocationChanged(@NonNull List<Location> locations) {
                 LocationListener.super.onLocationChanged(locations);
 
@@ -99,6 +115,7 @@ public final class LocationHelper  {
                         setProvider(LocationManager.GPS_PROVIDER);
                         break;
                 }
+                getCurrentLocation();
 
             }
 
@@ -111,6 +128,7 @@ public final class LocationHelper  {
                         setProvider(LocationManager.NETWORK_PROVIDER);
                         break;
                 }
+                getCurrentLocation();
             }
 
             @Override
@@ -127,6 +145,11 @@ public final class LocationHelper  {
             Log.e("Location", "Unable to set location");
         }
         Log.d("Location", String.format("Chosen provider: %s", provider));
+        setLocation(locationManager.getLastKnownLocation(provider));
+    }
+
+    public static String getProvider() {
+        return provider;
     }
 
     @SuppressLint("MissingPermission") /* called only within a permission OK context */
