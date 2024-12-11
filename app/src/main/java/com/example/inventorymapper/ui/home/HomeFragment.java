@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -90,6 +91,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void displayItemsForHousehold(Household household) {
+        // change string menu_home from string.xml
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(household.getName());
+
+
         // Fetch items for the selected Household
         Database.getAllHouseholds().child(household.getId()).child("location").child("items")
                 .addValueEventListener(new ValueEventListener() {
@@ -120,6 +125,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void showHouseholdsList() {
+        // change back
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_home);
+
+
         // Show the Households list and "Add New Location" button
         householdsRecyclerView.setVisibility(View.VISIBLE);
         addNewText.setVisibility(View.VISIBLE);
