@@ -14,9 +14,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.inventorymapper.LocationHelper;
+import com.example.inventorymapper.LocationViewModel;
 import com.example.inventorymapper.R;
 
 import org.osmdroid.api.IMapController;
@@ -31,6 +33,7 @@ import org.osmdroid.views.overlay.Marker;
 
 public class MapFragment extends Fragment {
     private MapViewModel data;
+    private LocationViewModel locationData;
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -39,9 +42,14 @@ public class MapFragment extends Fragment {
         Configuration.getInstance().load(getContext(), PreferenceManager.getDefaultSharedPreferences(getContext()));
         View root = inflater.inflate(R.layout.fragment_map, container, false);
         this.data = new ViewModelProvider(getActivity()).get(MapViewModel.class);
-        this.data.setLocation(LocationHelper.getCurrentLocation()
-                .orElse(LocationHelper.getDummyLocation())
-        );
+        this.locationData = new ViewModelProvider((getActivity())).get(LocationViewModel.class);
+
+        if (locationData.getLocation().getValue() != null) {
+            this.data.setLocation(locationData.getLocation().getValue());
+            this.locationData.getLocation().observe(getActivity(), location -> {
+                this.data.setLocation(locationData.getLocation().getValue());
+            });
+        }
 
         Location loc = data.getLocation().getValue();
         GeoPoint currentPos = new GeoPoint(loc.getLatitude(), loc.getLongitude());

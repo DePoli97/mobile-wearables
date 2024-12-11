@@ -1,5 +1,6 @@
 package com.example.inventorymapper.ui.home;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,10 +11,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.inventorymapper.LocationViewModel;
 import com.example.inventorymapper.R;
 import com.example.inventorymapper.Database;
 import com.example.inventorymapper.ui.forms.HouseholdCreationForm;
@@ -36,6 +39,7 @@ public class HomeFragment extends Fragment {
     private TextView addNewText, addNewItemText;
 
     private HomeViewModel homeViewModel;
+    private LocationViewModel locationViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +58,11 @@ public class HomeFragment extends Fragment {
 
         // Initialize ViewModel
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        locationViewModel = new ViewModelProvider(getActivity()).get(LocationViewModel.class);
+        locationViewModel.getLocation().observe(getViewLifecycleOwner(), location -> {
+            homeViewModel.sortHouseholdsByLocation(location);
+            Log.d("Location", "Setting location from home view");
+        });
 
         // Set up Household Adapter with click listener
         householdAdapter = new HouseholdAdapter(new ArrayList<>(), household -> {
@@ -121,6 +130,7 @@ public class HomeFragment extends Fragment {
 
     private void showHouseholdsList() {
         // Show the Households list and "Add New Location" button
+
         householdsRecyclerView.setVisibility(View.VISIBLE);
         addNewText.setVisibility(View.VISIBLE);
 

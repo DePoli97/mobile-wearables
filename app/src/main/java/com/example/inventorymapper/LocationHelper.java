@@ -8,42 +8,44 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.Manifest;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import java.util.List;
-import java.util.Optional;
 
 public final class LocationHelper  {
     public static final int REQUEST_LOCATION_PERMISSION = 12345;
     public static final int REQUEST_LOCATION_FLUSH = 5314;
+    public static final float COMPARE_DISTANCE_THRESHOLD = 500;
     private static LocationManager locationManager;
     private static LocationListener locationListener;
     private static String provider;
-    private static Location location;
+    private static LocationViewModel location;
 
     @SuppressLint("MissingPermission")
-    public static Optional<Location> getCurrentLocation() {
+    public static LiveData<Location> getCurrentLocation() {
         if (provider == null) {
             Log.e("Location", "NULL provider!");
-            return Optional.empty();
         }
 
         if(locationManager == null) {
             Log.d("Location", "Location not set up");
-            return Optional.empty();
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            locationManager.requestFlush(provider, locationListener, REQUEST_LOCATION_FLUSH);
         }
 
         setLocation(locationManager.getLastKnownLocation(provider));
 
-        if(location == null) {
 
-            return Optional.empty();
-        }
-
-        return Optional.of(location);
+        return location.getLocation();
     }
 
     public static Location getDummyLocation() {
@@ -56,8 +58,8 @@ public final class LocationHelper  {
         if (location == null) {
             return;
         }
-        location = newLocation;
-        Log.d("Location", "Update: Lat: " + location.getLatitude() + ", Lng: " + location.getLongitude());
+        location.setLocation(newLocation);
+        Log.d("Location", "Update: Lat: " + newLocation.getLatitude() + ", Lng: " + newLocation.getLongitude());
     }
 
     /**
@@ -115,8 +117,6 @@ public final class LocationHelper  {
                         setProvider(LocationManager.GPS_PROVIDER);
                         break;
                 }
-                getCurrentLocation();
-
             }
 
             @Override
@@ -128,7 +128,6 @@ public final class LocationHelper  {
                         setProvider(LocationManager.NETWORK_PROVIDER);
                         break;
                 }
-                getCurrentLocation();
             }
 
             @Override
@@ -138,6 +137,7 @@ public final class LocationHelper  {
         };
 
         locationManager = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
+        location = new ViewModelProvider((ViewModelStoreOwner) ctx).get(LocationViewModel.class);
 
         if (!setProvider(LocationManager.GPS_PROVIDER)
             && !setProvider(LocationManager.NETWORK_PROVIDER)
