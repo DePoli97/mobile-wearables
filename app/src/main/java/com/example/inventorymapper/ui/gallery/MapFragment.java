@@ -2,6 +2,7 @@ package com.example.inventorymapper.ui.gallery;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.inventorymapper.ui.home.HomeViewModel;
 import com.example.inventorymapper.ui.model.Household;
 
 import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -38,6 +40,7 @@ public class MapFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_households_map, container, false);
+        Configuration.getInstance().load(getContext(), PreferenceManager.getDefaultSharedPreferences(getContext()));
         map = root.findViewById(R.id.map);
 
         this.locationData = new ViewModelProvider(getActivity()).get(LocationViewModel.class);
@@ -46,7 +49,7 @@ public class MapFragment extends Fragment {
         Location loc = locationData.getLocation().getValue();
         GeoPoint currentPos = new GeoPoint(loc.getLatitude(), loc.getLongitude());
 
-        householdData.getHouseholds().observe(getActivity(), new Observer<List<Household>>() {
+        householdData.getHouseholds().observe(getViewLifecycleOwner(), new Observer<List<Household>>() {
             @Override
             public void onChanged(List<Household> households) {
                 if (markerList != null) {
