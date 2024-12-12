@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
         itemsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Initialize ViewModel
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
         locationViewModel = new ViewModelProvider(getActivity()).get(LocationViewModel.class);
         locationViewModel.getLocation().observe(getViewLifecycleOwner(), location -> {
             homeViewModel.sortHouseholdsByLocation(location);

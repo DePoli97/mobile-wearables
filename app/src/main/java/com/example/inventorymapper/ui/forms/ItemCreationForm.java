@@ -13,24 +13,28 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.inventorymapper.Database;
+import com.example.inventorymapper.LocationHelper;
 import com.example.inventorymapper.R;
+import com.example.inventorymapper.ui.home.HomeViewModel;
 import com.example.inventorymapper.ui.model.Household;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ItemCreationForm extends DialogFragment {
     private TextView textName;
     private TextView textDescription;
     private Button addButton;
     private Spinner householdSpinner;
-    private Spinner locationSpinner;
-    private ValueEventListener householdListener;
-    private ValueEventListener locationListener;
+    private HomeViewModel homeViewModel;
+    private List<Household> house_subjects;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -43,32 +47,25 @@ public class ItemCreationForm extends DialogFragment {
         this.textDescription = root.findViewById(R.id.item_desc);
         this.addButton = root.findViewById(R.id.confirm_btn);
 
+        this.homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
+
         this.householdSpinner = root.findViewById(R.id.house_spinner);
-        ArrayList<Household> house_subjects = new ArrayList<>();
+        android.location.Location loc = LocationHelper.getCurrentLocation().getValue();
+        if (loc == null) loc = LocationHelper.getDummyLocation();
+        homeViewModel.sortHouseholdsByLocation(loc);
+        house_subjects = homeViewModel.getHouseholds().getValue();
+        if (house_subjects == null) {
+            house_subjects = List.of();
+            Log.e("Item", "Null list of households");
+        }
         ArrayAdapter<Household> houseAdapter = new SpinnerHouseholdAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, house_subjects);
-        this.householdListener = new ValueEventListener() {
 
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataSnapshot.getChildren()
-                        .forEach((snapshot) -> {
-                            Household household = snapshot.getValue(Household.class);
-                            household.setId(snapshot.getKey());
-                            if(snapshot.getKey() == null) {
-                                Log.d("DB", "key is null!");
-                            }
-                            house_subjects.add(household);
-                        });
-                houseAdapter.notifyDataSetChanged();
-            }
+        homeViewModel.getHouseholds().observe(getActivity(), households -> {
+            house_subjects = households;
+            houseAdapter.notifyDataSetChanged();
+        });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(this.getClass().getName(), "getHouseholds cancelled", error.toException());
-            }
-        };
         houseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Database.getHouseholds().addValueEventListener(householdListener);
         householdSpinner.setAdapter(houseAdapter);
 
         /*
@@ -101,22 +98,19 @@ public class ItemCreationForm extends DialogFragment {
         */
 
         this.addButton.setOnClickListener(view -> {
-            this.add_item();
+            String locationName = this.textName.getText().toString();
+            String locationDesc = this.textDescription.getText().toString();
+            Household household = (Household) this.householdSpinner.getSelectedItem();
+            if(household == null) {
+                Toast.makeText(getContext(), "No household selected", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Database.addItem(locationName, locationDesc, household.getId());
             this.dismissNow();
         });
 
         return root;
     }
 
-    private void add_item() {
-        String locationName = this.textName.getText().toString();
-        String locationDesc = this.textDescription.getText().toString();
-        Household household = (Household) this.householdSpinner.getSelectedItem();
-        if(household == null) {
-            Toast.makeText(getContext(), "No household selected", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Database.addItem(locationName, locationDesc, household.getId());
-    }
 }

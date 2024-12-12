@@ -23,6 +23,7 @@ public class HomeViewModel extends ViewModel {
 
     public LiveData<List<Household>> getHouseholds() {
         if (householdsLiveData.getValue() == null) {
+            Log.d("Home", "Loading households from db");
             loadHouseholds();
         }
 
