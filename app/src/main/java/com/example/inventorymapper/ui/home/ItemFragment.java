@@ -21,10 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationFragment extends Fragment {
+public class ItemFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private LocationAdapter adapter;
+    private ItemAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class LocationFragment extends Fragment {
 
         recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new LocationAdapter(new ArrayList<>());
+        adapter = new ItemAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
 
         // Get arguments passed from HomeFragment

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.inventorymapper.R;
@@ -13,11 +14,11 @@ import com.example.inventorymapper.ui.model.Item;
 
 import java.util.List;
 
-public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.LocationViewHolder> {
 
     private List<Item> items;
 
-    public LocationAdapter(List<Item> items) {
+    public ItemAdapter(List<Item> items) {
         this.items = items;
     }
 
@@ -31,6 +32,12 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     public LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_location, parent, false);
+        // add listener
+        view.setOnClickListener((v) -> {
+            // Open ItemDetails dialog
+            ItemDetails itemDetails = new ItemDetails();
+            itemDetails.show(((FragmentActivity) v.getContext()).getSupportFragmentManager(), "ItemDetails");
+        });
         return new LocationViewHolder(view);
     }
 

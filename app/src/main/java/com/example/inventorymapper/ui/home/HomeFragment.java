@@ -1,6 +1,5 @@
 package com.example.inventorymapper.ui.home;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.HasDefaultViewModelProviderFactory;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +35,7 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView householdsRecyclerView, itemsRecyclerView;
     private HouseholdAdapter householdAdapter;
-    private LocationAdapter locationAdapter;
+    private ItemAdapter locationAdapter;
     private Button backButton;
     private TextView addNewText, addNewItemText;
 
@@ -76,7 +73,7 @@ public class HomeFragment extends Fragment {
         householdsRecyclerView.setAdapter(householdAdapter);
 
         // Set up Location Adapter for items
-        locationAdapter = new LocationAdapter(new ArrayList<>());
+        locationAdapter = new ItemAdapter(new ArrayList<>());
         itemsRecyclerView.setAdapter(locationAdapter);
 
         // Observe Household Data
