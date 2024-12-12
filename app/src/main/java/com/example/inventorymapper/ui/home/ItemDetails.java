@@ -33,7 +33,6 @@ public class ItemDetails extends DialogFragment {
         itemImage = root.findViewById(R.id.item_image);
         itemName = root.findViewById(R.id.item_title_TextView);
         itemDescription = root.findViewById(R.id.item_description_TextView);
-        modifyButton = root.findViewById(R.id.item_modify_button);
         deleteButton = root.findViewById(R.id.item_delete_button);
 
         ItemViewModel itemViewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);

@@ -51,18 +51,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <Button
-            android:id="@+id/item_modify_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Modify"
-            android:layout_marginEnd="8dp" />
+<!--        <Button-->
+<!--            android:id="@+id/item_modify_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Modify"-->
+<!--            android:visibility="invisible"-->
+<!--            android:layout_marginEnd="8dp" />-->
 
         <Button
             android:id="@+id/item_delete_button"
-            android:layout_width="wrap_content"
+            android:layout_width="137dp"
             android:layout_height="wrap_content"
-            android:text="Delete" />
+            android:backgroundTint="#D51C1C"
+            android:text="Delete"
+            android:textColor="@color/black"
+            app:iconTint="#F20707" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
