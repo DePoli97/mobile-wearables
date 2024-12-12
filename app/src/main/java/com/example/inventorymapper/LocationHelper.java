@@ -50,7 +50,8 @@ public final class LocationHelper  {
 
     public static Location getDummyLocation() {
         Location dummyLocation = new Location(provider);
-        dummyLocation.setLatitude(51);
+        dummyLocation.setLatitude(46.00833510427906);
+        dummyLocation.setLongitude(8.960988781472167);
         return dummyLocation;
     }
 

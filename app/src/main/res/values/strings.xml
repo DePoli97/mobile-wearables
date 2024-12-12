@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Households</string>
-    <string name="menu_search">Search</string>
+    <string name="menu_map">Map</string>
     <string name="menu_user">User</string>
     <string name="nav_header_title">Inventory Mapper 📍</string>
 </resources>
