@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.HasDefaultViewModelProviderFactory;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +31,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class HomeFragment extends Fragment {
 
@@ -103,6 +106,13 @@ public class HomeFragment extends Fragment {
         // change string menu_home from string.xml
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(household.getName());
 
+        // Show items RecyclerView and "Add New Item" Text, hide households
+        householdsRecyclerView.setVisibility(View.GONE);
+        addNewText.setVisibility(View.GONE);
+        itemsRecyclerView.setVisibility(View.VISIBLE);
+        addNewItemText.setVisibility(View.VISIBLE);
+        backButton.setVisibility(View.VISIBLE);
+
 
         // Fetch items for the selected Household
         Database.getAllHouseholds().child(household.getId()).child("location").child("items")
@@ -117,13 +127,6 @@ public class HomeFragment extends Fragment {
                             }
                         }
                         locationAdapter.setItems(items);
-
-                        // Show items RecyclerView and "Add New Item" Text, hide households
-                        householdsRecyclerView.setVisibility(View.GONE);
-                        addNewText.setVisibility(View.GONE);
-                        itemsRecyclerView.setVisibility(View.VISIBLE);
-                        addNewItemText.setVisibility(View.VISIBLE);
-                        backButton.setVisibility(View.VISIBLE);
                     }
 
                     @Override
