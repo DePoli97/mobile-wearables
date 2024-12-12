@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.inventorymapper.R;
@@ -32,18 +34,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.LocationViewHo
     public LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_location, parent, false);
-        // add listener
-        view.setOnClickListener((v) -> {
-            // Open ItemDetails dialog
-            ItemDetails itemDetails = new ItemDetails();
-            itemDetails.show(((FragmentActivity) v.getContext()).getSupportFragmentManager(), "ItemDetails");
-        });
+
         return new LocationViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull LocationViewHolder holder, int position) {
         Item item = items.get(position);
+        View view = holder.itemView;
+        view.setOnClickListener((v) -> {
+            // Open ItemDetails dialog
+            ItemDetails itemDetails = new ItemDetails();
+            ItemViewModel itemViewModel = new ViewModelProvider((ViewModelStoreOwner) v.getContext()).get(ItemViewModel.class);
+            itemViewModel.setItem(item);
+            itemDetails.show(((FragmentActivity) v.getContext()).getSupportFragmentManager(), "ItemDetails");
+        });
         holder.nameTextView.setText(item.getName());
     }
 
