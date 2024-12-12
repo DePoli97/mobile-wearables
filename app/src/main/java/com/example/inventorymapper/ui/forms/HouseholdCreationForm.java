@@ -1,7 +1,6 @@
 package com.example.inventorymapper.ui.forms;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +11,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentContainerView;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.inventorymapper.Database;
-import com.example.inventorymapper.LocationHelper;
 import com.example.inventorymapper.R;
 import com.example.inventorymapper.ui.model.Household;
 import com.example.inventorymapper.ui.model.Location;
 
 import java.util.List;
-import java.util.Optional;
 
 public class HouseholdCreationForm extends DialogFragment {
     private TextView textName;
@@ -44,7 +40,7 @@ public class HouseholdCreationForm extends DialogFragment {
         this.locationDesc = root.findViewById(R.id.location_desc);
         this.mapViewModel = new ViewModelProvider(getActivity()).get(MapViewModel.class);
         this.mapContainerView = root.findViewById(R.id.mapContainer);
-        MapFragment map = mapContainerView.getFragment();
+        MapSelectFragment map = mapContainerView.getFragment();
 
         this.addButton = root.findViewById(R.id.confirm_btn);
         this.addButton.setOnClickListener(view -> {

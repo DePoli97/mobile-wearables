@@ -6,24 +6,20 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.inventorymapper.LocationHelper;
 import com.example.inventorymapper.LocationViewModel;
 import com.example.inventorymapper.R;
 
 import org.osmdroid.api.IMapController;
+import org.osmdroid.api.IMapView;
 import org.osmdroid.config.Configuration;
-import org.osmdroid.events.MapEvent;
 import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -31,9 +27,10 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
 
-public class MapFragment extends Fragment {
+public class MapSelectFragment extends Fragment {
     private MapViewModel data;
     private LocationViewModel locationData;
+    private MapView map;
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -54,7 +51,7 @@ public class MapFragment extends Fragment {
         Location loc = data.getLocation().getValue();
         GeoPoint currentPos = new GeoPoint(loc.getLatitude(), loc.getLongitude());
 
-        MapView map = root.findViewById(R.id.map);
+        map = root.findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
         IMapController controller = map.getController();
         controller.setCenter(currentPos);
@@ -110,5 +107,10 @@ public class MapFragment extends Fragment {
         Log.d("Map", "Map created");
 
         return root;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
