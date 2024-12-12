@@ -51,7 +51,6 @@ public class HomeFragment extends Fragment {
         itemsRecyclerView = root.findViewById(R.id.items_recycler_view);
         backButton = root.findViewById(R.id.back_to_households_button);
         addNewText = root.findViewById(R.id.add_new_text);
-        addNewItemText = root.findViewById(R.id.add_new_item_text);
 
         // Set up RecyclerViews
         householdsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -87,12 +86,6 @@ public class HomeFragment extends Fragment {
             form.show(getParentFragmentManager(), "Household-form");
         });
 
-        // Handle "Add New Item" click
-        addNewItemText.setOnClickListener(v -> {
-            ItemCreationForm form = new ItemCreationForm();
-            form.show(getParentFragmentManager(), "Item-form");
-        });
-
         // Handle "Back to Households" click
         backButton.setOnClickListener(v -> showHouseholdsList());
 
@@ -107,7 +100,6 @@ public class HomeFragment extends Fragment {
         householdsRecyclerView.setVisibility(View.GONE);
         addNewText.setVisibility(View.GONE);
         itemsRecyclerView.setVisibility(View.VISIBLE);
-        addNewItemText.setVisibility(View.VISIBLE);
         backButton.setVisibility(View.VISIBLE);
 
 
@@ -145,7 +137,6 @@ public class HomeFragment extends Fragment {
 
         // Hide items RecyclerView, "Add New Item" Text, and back button
         itemsRecyclerView.setVisibility(View.GONE);
-        addNewItemText.setVisibility(View.GONE);
         backButton.setVisibility(View.GONE);
     }
 }
