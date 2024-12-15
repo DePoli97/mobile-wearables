@@ -1,14 +1,11 @@
-package com.example.inventorymapper.ui;
+package com.example.inventorymapper;
 
-import com.example.inventorymapper.MyApplication;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import android.net.Uri;
-
-import java.io.ByteArrayOutputStream;
 
 public final class Storage {
     private static final StorageReference mStorage = MyApplication.getStorageReference();

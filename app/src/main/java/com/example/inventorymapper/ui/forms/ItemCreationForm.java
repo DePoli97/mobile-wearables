@@ -22,6 +22,7 @@ import com.example.inventorymapper.Database;
 import com.example.inventorymapper.LocationHelper;
 import android.Manifest;
 import com.example.inventorymapper.R;
+import com.example.inventorymapper.Storage;
 import com.example.inventorymapper.ui.home.HomeViewModel;
 import com.example.inventorymapper.ui.model.Household;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +37,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import android.widget.ImageView;
 
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,7 +114,27 @@ public class ItemCreationForm extends DialogFragment {
                         Bundle extras = result.getData().getExtras();
                         capturedImage = (Bitmap) extras.get("data");
                         if (capturedImage != null) {
-                            previewImageView.setImageBitmap(capturedImage); // Display the image
+                            // convert the image to a byte array
+                            byte[] imageData = convertBitmapToByteArray(capturedImage);
+
+//                          // Save the image in Storage
+                            Storage.uploadImage(imageData, "images/myItemImage.jpg", task -> {
+                                if (task.isSuccessful()) {
+                                    // Get the download URL of the image
+                                    Storage.getDownloadUrl("images/myItemImage.jpg",
+                                            uri -> {
+                                                // Do something with the download URL
+                                                Log.d("ItemCreationForm", "Download URL: " + uri.toString());
+                                            },
+                                            e -> {
+                                                // Handle error
+                                                Log.e("ItemCreationForm", "Failed to get download URL", e);
+                                            });
+                                } else {
+                                    // Handle error
+                                    Log.e("ItemCreationForm", "Failed to upload image", task.getException());
+                                }
+                            });
                         }
                     } else {
                         Toast.makeText(getContext(), "Failed to capture image", Toast.LENGTH_SHORT).show();
@@ -143,6 +165,12 @@ public class ItemCreationForm extends DialogFragment {
 
     public Bitmap getCapturedImage() {
         return capturedImage;
+    }
+
+    public byte[] convertBitmapToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        return stream.toByteArray();
     }
 
 }
