@@ -4,13 +4,19 @@ import android.app.Application;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.FirebaseStorage;
+
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 // Qui vanno tutte le configurazioni per l'applicatione come Firebase, permessi, ecc...
 
 public class MyApplication extends Application {
     private static FirebaseDatabase database;
+    private static FirebaseStorage image_database;
 
     @Override
     public void onCreate() {
@@ -28,9 +34,16 @@ public class MyApplication extends Application {
 
         String url = "https://inventorymapper-1234-default-rtdb.europe-west1.firebasedatabase.app/";
         database = FirebaseDatabase.getInstance(url);
+
+
+        String url_images = "gs://inventorymapper-1234.firebasestorage.app";
+        image_database = FirebaseStorage.getInstance(url_images);
     }
 
     public static DatabaseReference getDatabaseReference() {
         return database.getReference();
     }
+
+    public static StorageReference getStorageReference() { return image_database.getReference(); }
+
 }
