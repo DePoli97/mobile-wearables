@@ -58,7 +58,7 @@ public class ItemDetails extends DialogFragment {
             public void onSuccess(Uri uri) {
                 Glide.with(ItemDetails.this)
                         .load(uri)
-                        .placeholder(R.drawable.mapic_person)
+//                        .placeholder(R.drawable.mapic_person)
                         .into(itemImage);
             }
         }, new OnFailureListener() {
@@ -67,7 +67,7 @@ public class ItemDetails extends DialogFragment {
                 // Log the error
                 Log.e("ItemDetails", "Failed to load image: " + e.getMessage());
                 // Handle any errors
-                itemImage.setImageResource(R.drawable.mapic_person);
+                itemImage.setImageResource(R.drawable.item);
             }
         });
     }
