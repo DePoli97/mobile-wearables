@@ -122,6 +122,7 @@ public class ItemCreationForm extends DialogFragment {
                             // Generate a unique file name for the image
                             String format = ".jpg";
                             String uniqueFileName = UUID.randomUUID().toString() + format;
+                            photoUri = uniqueFileName;
 
                             // Save the image in Storage
                             Storage.uploadImage(imageData, "images/" + uniqueFileName, task -> {
@@ -130,7 +131,6 @@ public class ItemCreationForm extends DialogFragment {
                                     Storage.getDownloadUrl("images/" + uniqueFileName,
                                             uri -> {
                                                 // Do something with the download URL
-                                                photoUri = uri.toString(); // Save the URI to the item                                            
                                                 Log.d("ItemCreationForm", "Download URL: " + uri.toString());
                                             },
                                             e -> {
