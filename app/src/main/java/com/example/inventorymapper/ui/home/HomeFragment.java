@@ -19,7 +19,6 @@ import com.example.inventorymapper.LocationViewModel;
 import com.example.inventorymapper.R;
 import com.example.inventorymapper.Database;
 import com.example.inventorymapper.ui.forms.HouseholdCreationForm;
-import com.example.inventorymapper.ui.forms.ItemCreationForm;
 import com.example.inventorymapper.ui.model.Household;
 import com.example.inventorymapper.ui.model.Item;
 import com.google.firebase.database.DataSnapshot;

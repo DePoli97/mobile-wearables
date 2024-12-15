@@ -60,7 +60,7 @@ public final class LocationHelper  {
             return;
         }
         location.setLocation(newLocation);
-        Log.d("Location", "Update: Lat: " + newLocation.getLatitude() + ", Lng: " + newLocation.getLongitude());
+//        Log.d("Location", "Update: Lat: " + newLocation.getLatitude() + ", Lng: " + newLocation.getLongitude());
     }
 
     /**

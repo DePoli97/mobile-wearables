@@ -1,5 +1,6 @@
 package com.example.inventorymapper.ui.forms;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,25 +13,40 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.inventorymapper.Database;
 import com.example.inventorymapper.LocationHelper;
+import android.Manifest;
 import com.example.inventorymapper.R;
 import com.example.inventorymapper.ui.home.HomeViewModel;
 import com.example.inventorymapper.ui.model.Household;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import android.widget.ImageView;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemCreationForm extends DialogFragment {
+    private static final int CAMERA_REQUEST_CODE = 100;
     private TextView textName;
     private TextView textDescription;
+    private ActivityResultLauncher<Intent> takePictureLauncher;
+    private ImageView previewImageView; // To show a preview of the captured image
+    private Bitmap capturedImage;
+
     private Button addButton;
     private Spinner householdSpinner;
     private HomeViewModel homeViewModel;
@@ -68,35 +84,6 @@ public class ItemCreationForm extends DialogFragment {
         houseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         householdSpinner.setAdapter(houseAdapter);
 
-        /*
-        this.locationSpinner = root.findViewById(R.id.location_spinner);
-        ArrayList<Location> location_subjects = new ArrayList<>();
-        ArrayAdapter<Location> locationAdapter = new LocationAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, location_subjects);
-
-        this.locationListener = new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataSnapshot.getChildren()
-                        .forEach((snapshot) -> {
-                            Location location = snapshot.getValue(Location.class);
-                            location.setId(snapshot.getKey());
-                            if(snapshot.getKey() == null) {
-                                Log.d("DB", "key is null!");
-                            }
-                            location_subjects.add(location);
-                        });
-                locationAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(this.getClass().getName(), "getHouseholds cancelled", error.toException());
-            }
-        };
-        locationSpinner.setAdapter(houseAdapter);
-        */
-
         this.addButton.setOnClickListener(view -> {
             String locationName = this.textName.getText().toString();
             String locationDesc = this.textDescription.getText().toString();
@@ -110,7 +97,52 @@ public class ItemCreationForm extends DialogFragment {
             this.dismissNow();
         });
 
+
+        // OPEN CAMERA AND TAKE PICTURE //
+
+
+        // Initialize the image preview view
+//        previewImageView = root.findViewById(R.id.image_preview);
+
+        // Initialize the launcher for camera intent
+        takePictureLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
+                        Bundle extras = result.getData().getExtras();
+                        capturedImage = (Bitmap) extras.get("data");
+                        if (capturedImage != null) {
+                            previewImageView.setImageBitmap(capturedImage); // Display the image
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "Failed to capture image", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+
+        // Open the camera immediately
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+        } else {
+            openCamera();
+        }
+
+
         return root;
+    }
+
+    private void openCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            takePictureLauncher.launch(intent);
+        } else {
+            Toast.makeText(getContext(), "Camera not available", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public Bitmap getCapturedImage() {
+        return capturedImage;
     }
 
 }

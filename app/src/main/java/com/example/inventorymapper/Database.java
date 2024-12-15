@@ -73,5 +73,4 @@ public final class Database {
     public static DatabaseReference getAllHouseholds() {
         return mDatabase.child("households");
     }
-
 }

@@ -20,7 +20,6 @@ public class ItemDetails extends DialogFragment {
     private ImageView itemImage;
     private TextView itemName;
     private TextView itemDescription;
-    private Button modifyButton;
     private Button deleteButton;
 
     @Override

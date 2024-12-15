@@ -4,6 +4,7 @@ public class Item {
     private String id;
     private String name;
     private String description;
+    private String photoUrl;
 
     // No-argument constructor required by Firebase
     public Item() {
