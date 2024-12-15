@@ -4,7 +4,7 @@ public class Item {
     private String id;
     private String name;
     private String description;
-    private String photoUrl;
+    private String photoUri;
 
     // No-argument constructor required by Firebase
     public Item() {
@@ -16,11 +16,10 @@ public class Item {
         this.description = description;
     }
 
-    // Constructor with ID
-    public Item(String id, String name, String description) {
-        this.id = id;
+    public Item(String name, String description, String photoUri) {
         this.name = name;
         this.description = description;
+        this.photoUri = photoUri;
     }
 
     // Getters and Setters
@@ -46,5 +45,13 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setPhotoUri(String photoUri) {
+        this.photoUri = photoUri;
+    }
+
+    public String getPhotoUri() {
+        return photoUri;
     }
 }

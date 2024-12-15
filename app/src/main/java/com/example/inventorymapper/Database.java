@@ -49,8 +49,8 @@ public final class Database {
                 .child("location");
     }
 
-    public static void addItem(String itemName, String itemDescription, String householdId) {
-        Item item = new Item(itemName, itemDescription);
+    public static void addItem(String itemName, String itemDescription, String photoUri, String householdId) {
+        Item item = new Item(itemName, itemDescription, photoUri);
         DatabaseReference itemRef = mDatabase
                 .child("households")
                 .child(householdId)

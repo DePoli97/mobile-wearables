@@ -46,6 +46,7 @@ public class ItemCreationForm extends DialogFragment {
     private static final int CAMERA_REQUEST_CODE = 100;
     private TextView textName;
     private TextView textDescription;
+    private String photoUri;
     private ActivityResultLauncher<Intent> takePictureLauncher;
     private ImageView previewImageView; // To show a preview of the captured image
     private Bitmap capturedImage;
@@ -96,16 +97,13 @@ public class ItemCreationForm extends DialogFragment {
                 return;
             }
 
-            Database.addItem(locationName, locationDesc, household.getId());
+            Database.addItem(locationName, locationDesc, photoUri, household.getId());
             this.dismissNow();
         });
 
-
+        //////////////////////////////////
         // OPEN CAMERA AND TAKE PICTURE //
-
-
-        // Initialize the image preview view
-//        previewImageView = root.findViewById(R.id.image_preview);
+        //////////////////////////////////
 
         // Initialize the launcher for camera intent
         takePictureLauncher = registerForActivityResult(
@@ -132,6 +130,7 @@ public class ItemCreationForm extends DialogFragment {
                                     Storage.getDownloadUrl("images/" + uniqueFileName,
                                             uri -> {
                                                 // Do something with the download URL
+                                                photoUri = uri.toString(); // Save the URI to the item                                            
                                                 Log.d("ItemCreationForm", "Download URL: " + uri.toString());
                                             },
                                             e -> {
