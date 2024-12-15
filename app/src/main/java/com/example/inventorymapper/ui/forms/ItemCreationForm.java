@@ -40,6 +40,7 @@ import android.widget.ImageView;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ItemCreationForm extends DialogFragment {
     private static final int CAMERA_REQUEST_CODE = 100;
@@ -117,11 +118,18 @@ public class ItemCreationForm extends DialogFragment {
                             // convert the image to a byte array
                             byte[] imageData = convertBitmapToByteArray(capturedImage);
 
-//                          // Save the image in Storage
-                            Storage.uploadImage(imageData, "images/myItemImage.jpg", task -> {
+                            // Crop the image to a square
+                            capturedImage = cropToSquare(capturedImage);
+
+                            // Generate a unique file name for the image
+                            String format = ".jpg";
+                            String uniqueFileName = UUID.randomUUID().toString() + format;
+
+                            // Save the image in Storage
+                            Storage.uploadImage(imageData, "images/" + uniqueFileName, task -> {
                                 if (task.isSuccessful()) {
                                     // Get the download URL of the image
-                                    Storage.getDownloadUrl("images/myItemImage.jpg",
+                                    Storage.getDownloadUrl("images/" + uniqueFileName,
                                             uri -> {
                                                 // Do something with the download URL
                                                 Log.d("ItemCreationForm", "Download URL: " + uri.toString());
@@ -171,6 +179,15 @@ public class ItemCreationForm extends DialogFragment {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         return stream.toByteArray();
+    }
+
+    private Bitmap cropToSquare(Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int newEdge = Math.min(width, height);
+        int x = (width - newEdge) / 2;
+        int y = (height - newEdge) / 2;
+        return Bitmap.createBitmap(bitmap, x, y, newEdge, newEdge);
     }
 
 }
