@@ -19,6 +19,9 @@ public class MapViewModel extends ViewModel {
 
     public void setLocation(double latitude, double longitude) {
         Location loc = this.location.getValue();
+        if (loc == null) {
+           loc = LocationHelper.getDummyLocation();
+        }
         loc.setLatitude(latitude);
         loc.setLongitude(longitude);
         this.location.setValue(loc);

@@ -56,11 +56,11 @@ public final class LocationHelper  {
     }
 
     private static void setLocation(Location newLocation) {
-        if (location == null) {
+        if (newLocation == null) {
             return;
         }
         location.setLocation(newLocation);
-//        Log.d("Location", "Update: Lat: " + newLocation.getLatitude() + ", Lng: " + newLocation.getLongitude());
+        Log.d("Location", "Update: Lat: " + newLocation.getLatitude() + ", Lng: " + newLocation.getLongitude());
     }
 
     /**
@@ -144,6 +144,7 @@ public final class LocationHelper  {
             && !setProvider(LocationManager.NETWORK_PROVIDER)
                 && !setProvider(LocationManager.PASSIVE_PROVIDER)) {
             Log.e("Location", "Unable to set location");
+            return;
         }
         Log.d("Location", String.format("Chosen provider: %s", provider));
         setLocation(locationManager.getLastKnownLocation(provider));
