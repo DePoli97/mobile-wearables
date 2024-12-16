@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.inventorymapper.Database;
@@ -25,12 +24,9 @@ import com.example.inventorymapper.R;
 import com.example.inventorymapper.Storage;
 import com.example.inventorymapper.ui.home.HomeViewModel;
 import com.example.inventorymapper.ui.model.Household;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -38,7 +34,6 @@ import android.widget.ImageView;
 
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,7 +58,7 @@ public class ItemCreationForm extends DialogFragment {
 
         View root = inflater.inflate(R.layout.fragment_item_creation_form, container, false);
 
-        this.textName = root.findViewById(R.id.house_name);
+        this.textName = root.findViewById(R.id.household_name);
         this.textDescription = root.findViewById(R.id.item_desc);
         this.addButton = root.findViewById(R.id.confirm_btn);
 

@@ -33,7 +33,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.LocationViewHo
     @Override
     public LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_location, parent, false);
+                .inflate(R.layout.item_item, parent, false);
 
         return new LocationViewHolder(view);
     }
@@ -62,7 +62,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.LocationViewHo
 
         LocationViewHolder(View itemView) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.house_name);
+            nameTextView = itemView.findViewById(R.id.household_name);
         }
     }
 }

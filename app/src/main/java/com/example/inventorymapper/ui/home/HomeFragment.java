@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,7 +50,7 @@ public class HomeFragment extends Fragment {
         householdsRecyclerView = root.findViewById(R.id.recycler_view);
         itemsRecyclerView = root.findViewById(R.id.items_recycler_view);
         backButton = root.findViewById(R.id.back_to_households_button);
-        addNewText = root.findViewById(R.id.add_new_text);
+//        addNewText = root.findViewById(R.id.add_new_text);
 
         // Set up RecyclerViews
         householdsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -79,11 +80,22 @@ public class HomeFragment extends Fragment {
             householdAdapter.setHouseholds(households);
         });
 
-        // Handle "Add New Location" click
-        addNewText.setOnClickListener(v -> {
+        // ADD NEW HOUSEHOLD BUTTON
+        View addNewHouseholdView = root.findViewById(R.id.add_new_household);
+        // Find the TextView within the included layout
+        TextView householdName = addNewHouseholdView.findViewById(R.id.household_name);
+        // Set the text to "Add New Household"
+        householdName.setText("Add New Household");
+        // Optionally, change the icon if desired
+        ImageView householdIcon = addNewHouseholdView.findViewById(R.id.household_icon);
+        householdIcon.setImageResource(R.drawable.plus);
+
+        // Set the click listener
+        addNewHouseholdView.setOnClickListener(v -> {
             HouseholdCreationForm form = new HouseholdCreationForm();
             form.show(getParentFragmentManager(), "Household-form");
         });
+
 
         // Handle "Back to Households" click
         backButton.setOnClickListener(v -> showHouseholdsList());

@@ -49,7 +49,10 @@ public class MapSelectFragment extends Fragment {
         }
 
         Location loc = data.getLocation().getValue();
-        GeoPoint currentPos = new GeoPoint(loc.getLatitude(), loc.getLongitude());
+        // TODO: to fix
+        // GeoPoint currentPos = new GeoPoint(loc.getLatitude(), loc.getLongitude());
+        // DUMMY OBJECT with coordinates of USI
+        GeoPoint currentPos = new GeoPoint(46.011972, 8.961083);
 
         map = root.findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
