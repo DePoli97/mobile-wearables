@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
     private HouseholdAdapter householdAdapter;
     private ItemAdapter locationAdapter;
     private Button backButton;
-    private TextView addNewText, addNewItemText;
+    private View addNewHouseholdView;
 
     private HomeViewModel homeViewModel;
     private LocationViewModel locationViewModel;
@@ -50,7 +50,6 @@ public class HomeFragment extends Fragment {
         householdsRecyclerView = root.findViewById(R.id.recycler_view);
         itemsRecyclerView = root.findViewById(R.id.items_recycler_view);
         backButton = root.findViewById(R.id.back_to_households_button);
-//        addNewText = root.findViewById(R.id.add_new_text);
 
         // Set up RecyclerViews
         householdsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -81,7 +80,7 @@ public class HomeFragment extends Fragment {
         });
 
         // ADD NEW HOUSEHOLD BUTTON
-        View addNewHouseholdView = root.findViewById(R.id.add_new_household);
+        addNewHouseholdView = root.findViewById(R.id.add_new_household);
         // Find the TextView within the included layout
         TextView householdName = addNewHouseholdView.findViewById(R.id.household_name);
         // Set the text to "Add New Household"
@@ -109,7 +108,7 @@ public class HomeFragment extends Fragment {
 
         // Show items RecyclerView and "Add New Item" Text, hide households
         householdsRecyclerView.setVisibility(View.GONE);
-        addNewText.setVisibility(View.GONE);
+        addNewHouseholdView.setVisibility(View.GONE);
         itemsRecyclerView.setVisibility(View.VISIBLE);
         backButton.setVisibility(View.VISIBLE);
 
@@ -144,7 +143,7 @@ public class HomeFragment extends Fragment {
         // Show the Households list and "Add New Location" button
 
         householdsRecyclerView.setVisibility(View.VISIBLE);
-        addNewText.setVisibility(View.VISIBLE);
+        addNewHouseholdView.setVisibility(View.VISIBLE);
 
         // Hide items RecyclerView, "Add New Item" Text, and back button
         itemsRecyclerView.setVisibility(View.GONE);
