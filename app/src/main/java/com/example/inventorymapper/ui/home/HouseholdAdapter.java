@@ -55,7 +55,7 @@ public class HouseholdAdapter extends RecyclerView.Adapter<HouseholdAdapter.Hous
 
         HouseholdViewHolder(View itemView) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.household_name);
+            nameTextView = itemView.findViewById(R.id.item_name);
         }
     }
 
