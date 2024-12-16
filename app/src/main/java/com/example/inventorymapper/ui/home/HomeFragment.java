@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,7 +54,7 @@ public class HomeFragment extends Fragment {
 
         // Set up RecyclerViews
         householdsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        itemsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        itemsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         // Initialize ViewModel
         homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
@@ -82,7 +83,7 @@ public class HomeFragment extends Fragment {
         // ADD NEW HOUSEHOLD BUTTON
         addNewHouseholdView = root.findViewById(R.id.add_new_household);
         // Find the TextView within the included layout
-        TextView householdName = addNewHouseholdView.findViewById(R.id.household_name);
+        TextView householdName = addNewHouseholdView.findViewById(R.id.item_name);
         // Set the text to "Add New Household"
         householdName.setText("Add New Household");
         // Optionally, change the icon if desired

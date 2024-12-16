@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -32,37 +33,39 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.LocationViewHo
     @NonNull
     @Override
     public LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_item, parent, false);
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_item, parent, false);
         return new LocationViewHolder(view);
+    }
+
+    static class LocationViewHolder extends RecyclerView.ViewHolder {
+        TextView nameTextView;
+        ImageView imageView;
+    
+        LocationViewHolder(View itemView) {
+            super(itemView);
+            nameTextView = itemView.findViewById(R.id.item_name);
+            imageView = itemView.findViewById(R.id.item_image);
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull LocationViewHolder holder, int position) {
         Item item = items.get(position);
-        View view = holder.itemView;
-        view.setOnClickListener((v) -> {
+        holder.nameTextView.setText(item.getName());
+        // Bind the image (replace with your image resource or loading logic)
+        holder.imageView.setImageResource(R.drawable.plus);
+        // Set the click listener
+        holder.itemView.setOnClickListener(v -> {
             // Open ItemDetails dialog
             ItemDetails itemDetails = new ItemDetails();
-            ItemViewModel itemViewModel = new ViewModelProvider((ViewModelStoreOwner) v.getContext()).get(ItemViewModel.class);
+            ItemViewModel itemViewModel = new ViewModelProvider((FragmentActivity) v.getContext()).get(ItemViewModel.class);
             itemViewModel.setItem(item);
             itemDetails.show(((FragmentActivity) v.getContext()).getSupportFragmentManager(), "ItemDetails");
         });
-        holder.nameTextView.setText(item.getName());
     }
 
     @Override
     public int getItemCount() {
         return items != null ? items.size() : 0;
-    }
-
-    static class LocationViewHolder extends RecyclerView.ViewHolder {
-        TextView nameTextView;
-
-        LocationViewHolder(View itemView) {
-            super(itemView);
-            nameTextView = itemView.findViewById(R.id.household_name);
-        }
     }
 }

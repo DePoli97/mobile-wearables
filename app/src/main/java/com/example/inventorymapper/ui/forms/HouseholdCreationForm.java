@@ -36,7 +36,7 @@ public class HouseholdCreationForm extends DialogFragment {
 
         View root = inflater.inflate(R.layout.fragment_household_creation_form, container, false);
 
-        this.textName = root.findViewById(R.id.household_name);
+        this.textName = root.findViewById(R.id.item_name);
         this.locationDesc = root.findViewById(R.id.location_desc);
         this.mapViewModel = new ViewModelProvider(getActivity()).get(MapViewModel.class);
         this.mapContainerView = root.findViewById(R.id.mapContainer);

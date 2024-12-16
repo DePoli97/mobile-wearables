@@ -22,7 +22,7 @@
             android:src="@drawable/mapic_house_window" />
 
         <TextView
-            android:id="@+id/household_name"
+            android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
