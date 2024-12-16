@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.example.inventorymapper.Database;
 import com.example.inventorymapper.R;
 import com.example.inventorymapper.Storage;
 import com.example.inventorymapper.ui.model.Item;
@@ -47,6 +48,14 @@ public class ItemDetails extends DialogFragment {
             itemDescription.setText(item.getDescription());
             loadImage(item.getPhotoUri());
         });
+
+        // add listener to delete button
+        deleteButton.setOnClickListener(v -> {
+            Database.deleteItem(item);
+            dismiss();
+        });
+
+
         return root;
     }
 
@@ -58,7 +67,7 @@ public class ItemDetails extends DialogFragment {
             public void onSuccess(Uri uri) {
                 Glide.with(ItemDetails.this)
                         .load(uri)
-//                        .placeholder(R.drawable.mapic_person)
+                        .placeholder(R.drawable.item)
                         .into(itemImage);
             }
         }, new OnFailureListener() {

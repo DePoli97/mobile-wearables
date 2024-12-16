@@ -66,6 +66,13 @@ public final class Database {
         });
     }
 
+    public static void deleteItem(Item item) {
+        Storage.deleteImage(item.getPhotoUri());
+
+        // TODO: delete the item from Databaase, household refernece?
+    }
+
+
     public static DatabaseReference getAllItems() {
         return mDatabase.child("items");
     }

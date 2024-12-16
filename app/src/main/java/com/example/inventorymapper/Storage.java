@@ -29,4 +29,19 @@ public final class Storage {
                 .addOnSuccessListener(successListener)
                 .addOnFailureListener(failureListener);
     }
+
+    public static void deleteImage(String fileName) {
+        StorageReference fileRef = mStorage.child("images/" + fileName);
+        fileRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("Storage", "Deleted file: " + fileName);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("Storage", "Failed to delete file: " + fileName, e);
+            }
+        });
+}
 }
