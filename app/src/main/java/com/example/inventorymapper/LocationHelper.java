@@ -32,10 +32,14 @@ public final class LocationHelper  {
     public static LiveData<Location> getCurrentLocation() {
         if (provider == null) {
             Log.e("Location", "NULL provider!");
+            setLocation(null);
+            return location.getLocation();
         }
 
         if(locationManager == null) {
             Log.d("Location", "Location not set up");
+            setLocation(getDummyLocation());
+            return location.getLocation();
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -118,6 +122,7 @@ public final class LocationHelper  {
                         setProvider(LocationManager.GPS_PROVIDER);
                         break;
                 }
+                Log.d("Location", "Provider enabled: " + provider);
             }
 
             @Override
@@ -129,6 +134,7 @@ public final class LocationHelper  {
                         setProvider(LocationManager.NETWORK_PROVIDER);
                         break;
                 }
+                Log.d("Location", "Provider disabled: " + provider);
             }
 
             @Override
@@ -141,8 +147,8 @@ public final class LocationHelper  {
         location = new ViewModelProvider((ViewModelStoreOwner) ctx).get(LocationViewModel.class);
 
         if (!setProvider(LocationManager.GPS_PROVIDER)
-            && !setProvider(LocationManager.NETWORK_PROVIDER)
-                && !setProvider(LocationManager.PASSIVE_PROVIDER)) {
+                || !setProvider(LocationManager.NETWORK_PROVIDER)
+                || !setProvider(LocationManager.PASSIVE_PROVIDER)) {
             Log.e("Location", "Unable to set location");
             return;
         }

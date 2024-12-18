@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.inventorymapper.LocationHelper;
 import com.example.inventorymapper.LocationViewModel;
 import com.example.inventorymapper.R;
 import com.example.inventorymapper.ui.home.HomeViewModel;
@@ -50,6 +51,9 @@ public class MapFragment extends Fragment {
         this.householdData = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
 
         Location loc = locationData.getLocation().getValue();
+        if (loc == null) {
+            loc = LocationHelper.getDummyLocation();
+        }
         GeoPoint currentPos = new GeoPoint(loc.getLatitude(), loc.getLongitude());
 
         householdData.getHouseholds().observe(getViewLifecycleOwner(), new Observer<List<Household>>() {

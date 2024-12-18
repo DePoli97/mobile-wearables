@@ -10,9 +10,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
-        android:layout_width="370dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,14 +24,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="name"
+            android:inputType="text|textShortMessage"
+            android:nestedScrollingEnabled="false"
+            android:singleLine="true"
             android:textAlignment="center" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout4"
-        android:layout_width="370dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
@@ -39,7 +46,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="description"
-            android:textAlignment="center" />
+            android:inputType="text|textShortMessage"
+            android:nestedScrollingEnabled="false"
+            android:singleLine="true"
+            android:textAlignment="textStart"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -55,9 +65,11 @@
 
     <Spinner
         android:id="@+id/house_spinner"
-        android:layout_width="370dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
