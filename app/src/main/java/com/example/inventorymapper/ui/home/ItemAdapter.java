@@ -1,5 +1,7 @@
 package com.example.inventorymapper.ui.home;
 
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +14,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.inventorymapper.Storage;
+
+
 import com.example.inventorymapper.R;
 import com.example.inventorymapper.ui.model.Item;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
 
@@ -53,7 +61,24 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.LocationViewHo
         Item item = items.get(position);
         holder.nameTextView.setText(item.getName());
         // Bind the image (replace with your image resource or loading logic)
-        holder.imageView.setImageResource(R.drawable.plus);
+        Storage.getDownloadUrl("images/" + item.getPhotoUri(), new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(holder.itemView)
+                        .load(uri)
+                        .placeholder(R.drawable.item)
+                        .into(holder.imageView);
+            }
+        }, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Log the error
+                Log.e("ItemAdapter", "Failed to load image: " + e.getMessage());
+                // Handle any errors
+                holder.imageView.setImageResource(R.drawable.item);
+            }
+        });
+
         // Set the click listener
         holder.itemView.setOnClickListener(v -> {
             // Open ItemDetails dialog

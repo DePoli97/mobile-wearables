@@ -21,6 +21,8 @@ import com.example.inventorymapper.Storage;
 import com.example.inventorymapper.ui.model.Item;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.inventorymapper.Storage;
+
 
 public class ItemDetails extends DialogFragment {
     private Item item;
