@@ -34,25 +34,30 @@ public class HomeViewModel extends ViewModel {
         List<Household> households = householdsLiveData.getValue();
 
         if (households == null) {
-            Log.d("Home", "Null households to be sorted");
+            Log.e("Home", "Null households to be sorted");
+            return;
+        }
+
+        if (location == null) {
+            Log.e("Home", "Location for sorting is null");
             return;
         }
 
         households.sort((o1, o2) -> {
-//            float[] distance1 = {0};
-//            float[] distance2 = {0};
-//            Location.distanceBetween(location.getLatitude(), location.getLongitude(), o1.getLatitude(), o1.getLongitude(), distance1);
-//            Location.distanceBetween(location.getLatitude(), location.getLongitude(), o2.getLatitude(), o2.getLongitude(), distance2);
-//
-//            if (Math.abs(distance1[0] - distance2[0]) < LocationHelper.COMPARE_DISTANCE_THRESHOLD) {
-//                return 0;
-//            }
-//
-//            if (distance1[0] < distance2[0]) {
-//                return -1;
-//            } else if (distance1[0] > distance2[0]) {
-//                return 1;
-//            }
+            float[] distance1 = {0};
+            float[] distance2 = {0};
+            Location.distanceBetween(location.getLatitude(), location.getLongitude(), o1.getLatitude(), o1.getLongitude(), distance1);
+            Location.distanceBetween(location.getLatitude(), location.getLongitude(), o2.getLatitude(), o2.getLongitude(), distance2);
+
+            if (Math.abs(distance1[0] - distance2[0]) < LocationHelper.COMPARE_DISTANCE_THRESHOLD) {
+                return 0;
+            }
+
+            if (distance1[0] < distance2[0]) {
+                return -1;
+            } else if (distance1[0] > distance2[0]) {
+                return 1;
+            }
             return 0;
         });
         Log.d("Location", "Households sorted by location");
@@ -73,6 +78,7 @@ public class HomeViewModel extends ViewModel {
                 }
 
                 householdsLiveData.setValue(households); // Notify observers
+                // sort households based on location helper latest value
                 sortHouseholdsByLocation(LocationHelper.getCurrentLocation().getValue());
             }
 

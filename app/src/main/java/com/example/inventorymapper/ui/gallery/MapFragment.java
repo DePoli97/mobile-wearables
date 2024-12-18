@@ -109,6 +109,8 @@ public class MapFragment extends Fragment {
         userMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_TOP);
         userMarker.setIcon(ContextCompat.getDrawable(getContext(), R.drawable.mapic_person));
         userMarker.setPosition(currentPos);
+        // disable info window
+        userMarker.setInfoWindow(null);
         map.getOverlays().add(userMarker);
 
         map.setTileSource(TileSourceFactory.MAPNIK);
