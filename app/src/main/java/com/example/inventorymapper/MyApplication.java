@@ -34,6 +34,7 @@ public class MyApplication extends Application {
 
         String url = "https://inventorymapper-1234-default-rtdb.europe-west1.firebasedatabase.app/";
         database = FirebaseDatabase.getInstance(url);
+        database.setPersistenceEnabled(true);
 
 
         String url_images = "gs://inventorymapper-1234.firebasestorage.app";
