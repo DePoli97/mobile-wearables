@@ -1,10 +1,13 @@
 package com.example.inventorymapper;
 
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.example.inventorymapper.ui.forms.ItemCreationForm;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.inventorymapper.databinding.ActivityMainBinding;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private final int MAP_PERMISSION_REQUEST = 6969;
@@ -58,6 +62,25 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         LocationHelper.getLocationPermission(this, MainActivity.this);
+
+
+        ///
+
+        ImageRecognitionHelper helper = new ImageRecognitionHelper();
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.asdf);
+
+        helper.recognizeMainSubject(bitmap, new ImageRecognitionHelper.MainSubjectCallback() {
+            @Override
+            public void onSuccess(String label, float confidence) {
+                Log.d("ImageRecognition", "Main subject: " + label + " (confidence: " + confidence + ")");
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.e("ImageRecognition", "Error: " + error);
+            }
+        });
+
     }
 
     public FloatingActionButton getActionButton() {
