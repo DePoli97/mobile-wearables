@@ -1,8 +1,11 @@
 package com.example.inventorymapper;
 
+import android.util.Log;
+
 import com.example.inventorymapper.ui.model.Household;
 import com.example.inventorymapper.ui.model.Item;
 import com.example.inventorymapper.ui.model.Location;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -50,7 +53,7 @@ public final class Database {
     }
 
     public static void addItem(String itemName, String itemDescription, String photoUri, String householdId) {
-        Item item = new Item(itemName, itemDescription, photoUri);
+        Item item = new Item(itemName, itemDescription, photoUri, householdId);
         DatabaseReference itemRef = mDatabase
                 .child("households")
                 .child(householdId)
@@ -69,7 +72,22 @@ public final class Database {
     public static void deleteItem(Item item) {
         Storage.deleteImage(item.getPhotoUri());
 
-        // TODO: delete the item from Databaase, household refernece?
+        // Delete the item from Database
+        DatabaseReference itemRef = mDatabase
+                .child("households")
+                .child(item.getHouseholdId())
+                .child("location")
+                .child("items");
+
+        Log.d("Database", "Deleting item: " + item.getName() + " from " + item.getHouseholdId());
+
+        itemRef.orderByChild("id").equalTo(item.getId()).get().addOnCompleteListener(snapshot -> {
+            if (snapshot.isSuccessful() && snapshot.getResult().hasChildren()) {
+                for (DataSnapshot child : snapshot.getResult().getChildren()) {
+                    child.getRef().removeValue();
+                }
+            }
+        });
     }
 
 
