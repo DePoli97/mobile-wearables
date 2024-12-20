@@ -12,13 +12,14 @@ public class Location {
     private List<Item> items;
 
     public Location() {
-
+        this.items = new ArrayList<>();
     }
 
     public Location(String name, String description) {
         this.name = name;
         this.description = description;
         this.sublocations = new ArrayList<>();
+        this.items = new ArrayList<>();
     }
 
     public Location(String id, String name, String description) {
@@ -26,6 +27,7 @@ public class Location {
         this.name = name;
         this.description = description;
         this.sublocations = new ArrayList<>();
+        this.items = new ArrayList<>();
     }
 
     public Location(String id, String name, String description, List<Location> sublocations) {
@@ -33,6 +35,7 @@ public class Location {
         this.name = name;
         this.description = description;
         this.sublocations = sublocations;
+        this.items = new ArrayList<>();
     }
 
     public Location addSublocation(Location loc) {

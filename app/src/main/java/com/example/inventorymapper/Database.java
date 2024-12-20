@@ -72,11 +72,6 @@ public final class Database {
         // TODO: delete the item from Databaase, household refernece?
     }
 
-
-    public static DatabaseReference getAllItems() {
-        return mDatabase.child("items");
-    }
-
     public static DatabaseReference getAllHouseholds() {
         return mDatabase.child("households");
     }

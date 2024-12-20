@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_households"
-            android:icon="@drawable/find"
+            android:icon="@drawable/mapic_house_window"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_map"
@@ -14,7 +14,7 @@
             android:title="@string/menu_map" />
         <item
             android:id="@+id/nav_user"
-            android:icon="@drawable/user"
-            android:title="@string/menu_user" />
+            android:icon="@drawable/find"
+            android:title="@string/menu_search" />
     </group>
 </menu>
