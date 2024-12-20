@@ -32,6 +32,8 @@ public final class LocationHelper  {
     @SuppressLint("MissingPermission")
     public static LiveData<Location> getCurrentLocation() {
         if (location == null) {
+            // Somehow until now we did nto have a problem where the location was asked for before
+            // really ugly fix
             return new MutableLiveData<>(getDummyLocation());
         }
         if (provider == null) {
