@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment {
         householdName.setText("Add New Household");
         // Optionally, change the icon if desired
         ImageView householdIcon = addNewHouseholdView.findViewById(R.id.household_icon);
-        householdIcon.setImageResource(R.drawable.item);
+        householdIcon.setImageResource(R.drawable.plus);
 
         // Set the click listener
         addNewHouseholdView.setOnClickListener(v -> {
