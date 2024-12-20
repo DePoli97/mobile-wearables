@@ -43,18 +43,23 @@ public class SearchViewModel extends ViewModel {
                     Household household = snapshot.getValue(Household.class);
                     Log.d("Search", household.getName());
                     List<Item> _items = household.getLocation().getItems();
+                    Log.d("Search", "" + _items.size());
                     if (_items != null) {
                         _items.stream().peek(item -> item.setId(household.getName()));
+
                         List<Item> localItems = items.getValue();
                         localItems.addAll(_items);
                         items.setValue(localItems);
+                        if (!_items.isEmpty()) {
+                            assert !items.getValue().isEmpty();
+                        }
                     }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e("Search", "DB error" + error.getMessage());
             }
         });
     }
@@ -63,9 +68,10 @@ public class SearchViewModel extends ViewModel {
         List<String> queryTokens = Arrays.stream(query.split(" "))
                 .map(String::toLowerCase)
                 .collect(Collectors.toList());
-        List<Item> items = this.items.getValue();
-        if (items != null) {
-            List<Item> _searchItems = items.stream()
+        List<Item> _items = items.getValue();
+
+        if (_items != null && !_items.isEmpty()) {
+            List<Item> _searchItems = _items.stream()
                     .filter(item -> {
                         List<String> item_tokens = Arrays.stream(item.getName().split(" "))
                                 .map(String::toLowerCase)
@@ -74,7 +80,7 @@ public class SearchViewModel extends ViewModel {
                                 .map(String::toLowerCase)
                                 .collect(Collectors.toList()));
 
-                        return true || item_tokens.stream().anyMatch(token -> queryTokens.stream()
+                        return item_tokens.stream().anyMatch(token -> queryTokens.stream()
                                 .anyMatch(_query -> _query.equals(token)));
                     })
                     .collect(Collectors.toList());
