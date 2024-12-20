@@ -35,6 +35,12 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packaging {
+        resources {
+            excludes.add("META-INF/DEPENDENCIES")
+            excludes.add("mozilla/public-suffix-list.txt")
+        }
+    }
 }
 
 dependencies {
@@ -47,6 +53,7 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.firebase.storage)
+    implementation(libs.firebase.crashlytics.buildtools)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -66,4 +73,11 @@ dependencies {
     // Add Glide dependency
     implementation("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+
+    implementation ("com.google.mlkit:image-labeling:17.0.7")
+
+//    implementation ("org.apache.httpcomponents.client5:httpclient5:5.2")
+
+    implementation ("org.apache.httpcomponents:httpclient:4.5.14")
+    implementation ("com.fasterxml.jackson.core:jackson-databind:2.15.2")
 }
