@@ -127,6 +127,7 @@ public class ItemCreationForm extends DialogFragment {
                                 @Override
                                 public void onError(String error) {
                                     Log.e("ImageRecognition", "Error: " + error);
+                                    Toast.makeText(getContext(), "Failed to recognize object", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
