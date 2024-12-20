@@ -79,7 +79,12 @@ public class HomeViewModel extends ViewModel {
 
                 householdsLiveData.setValue(households); // Notify observers
                 // sort households based on location helper latest value
-                sortHouseholdsByLocation(LocationHelper.getCurrentLocation().getValue());
+                Location loc = LocationHelper
+                        .getCurrentLocation()
+                        .getValue();
+                if (loc != null) {
+                    sortHouseholdsByLocation(loc);
+                }
             }
 
             @Override

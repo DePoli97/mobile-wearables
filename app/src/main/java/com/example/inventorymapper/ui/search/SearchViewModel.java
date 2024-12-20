@@ -74,7 +74,7 @@ public class SearchViewModel extends ViewModel {
                                 .map(String::toLowerCase)
                                 .collect(Collectors.toList()));
 
-                        return item_tokens.stream().anyMatch(token -> queryTokens.stream()
+                        return true || item_tokens.stream().anyMatch(token -> queryTokens.stream()
                                 .anyMatch(_query -> _query.equals(token)));
                     })
                     .collect(Collectors.toList());

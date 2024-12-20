@@ -14,6 +14,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
@@ -30,9 +31,12 @@ public final class LocationHelper  {
 
     @SuppressLint("MissingPermission")
     public static LiveData<Location> getCurrentLocation() {
+        if (location == null) {
+            return new MutableLiveData<>(getDummyLocation());
+        }
         if (provider == null) {
             Log.e("Location", "NULL provider!");
-            setLocation(null);
+            setLocation(getDummyLocation());
             return location.getLocation();
         }
 
