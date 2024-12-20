@@ -35,6 +35,12 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packaging {
+        resources {
+            excludes.add("META-INF/DEPENDENCIES")
+            excludes.add("mozilla/public-suffix-list.txt")
+        }
+    }
 }
 
 dependencies {
@@ -70,4 +76,8 @@ dependencies {
 
     implementation ("com.google.mlkit:image-labeling:17.0.7")
 
+//    implementation ("org.apache.httpcomponents.client5:httpclient5:5.2")
+
+    implementation ("org.apache.httpcomponents:httpclient:4.5.14")
+    implementation ("com.fasterxml.jackson.core:jackson-databind:2.15.2")
 }
