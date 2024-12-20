@@ -1,6 +1,7 @@
 package com.example.inventorymapper.ui.forms;
 
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.inventorymapper.Database;
+import com.example.inventorymapper.ImageRecognitionHelper;
 import com.example.inventorymapper.LocationHelper;
 import android.Manifest;
 import com.example.inventorymapper.R;
@@ -110,6 +112,23 @@ public class ItemCreationForm extends DialogFragment {
                         if (capturedImage != null) {
                             // convert the image to a byte array
                             byte[] imageData = convertBitmapToByteArray(capturedImage);
+
+
+                            ImageRecognitionHelper helper = new ImageRecognitionHelper();
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+
+                            helper.recognizeMainSubject(bitmap, new ImageRecognitionHelper.MainSubjectCallback() {
+                                @Override
+                                public void onSuccess(String label, float confidence) {
+                                    Log.d("ImageRecognition", "Main subject: " + label + " (confidence: " + confidence + ")");
+                                    textName.setText(label);
+                                }
+
+                                @Override
+                                public void onError(String error) {
+                                    Log.e("ImageRecognition", "Error: " + error);
+                                }
+                            });
 
                             // Crop the image to a square
                             capturedImage = cropToSquare(capturedImage);
